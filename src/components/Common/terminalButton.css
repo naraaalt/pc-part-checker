@@ -1,0 +1,118 @@
+.terminal-button{
+
+    position:relative;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    background:none;
+
+    border:none;
+
+    padding:0;
+
+    cursor:pointer;
+
+    color:#777;
+
+    font-family:monospace;
+
+    font-size:16px;
+
+    letter-spacing:1px;
+
+    transition:
+        color .25s,
+        text-shadow .25s,
+        transform .25s;
+
+}
+
+.terminal-button:hover{
+
+    color:#70ff5c;
+
+    text-shadow:0 0 8px rgba(112,255,92,.5);
+
+}
+
+.terminal-button::before{
+
+    content:">";
+
+    margin-right:8px;
+
+    opacity:0;
+
+    transform:translateX(-8px);
+
+    transition:
+        opacity .25s,
+        transform .25s;
+
+}
+
+.terminal-button:hover::before{
+
+    opacity:1;
+
+    transform:translateX(0);
+
+}
+
+.terminal-button.typing{
+
+    color:#70ff5c;
+
+    text-shadow:0 0 10px #70ff5c;
+
+}
+
+.terminal-button.typing::before{
+
+    opacity:1;
+
+    transform:translateX(0);
+
+}
+
+.terminal-button.terminal-link{
+
+    width:max-content;
+
+    color:#bcbcbc;
+
+    font-size:15px;
+
+    letter-spacing:1px;
+
+    transition:.2s;
+
+    cursor:pointer;
+
+}
+
+.terminal-button.terminal-link:hover{
+
+    color:#70ff5c;
+
+    transform:translateX(14px) scale(1.08);
+
+    text-shadow:
+        0 0 10px #70ff5c,
+        0 0 18px #70ff5c;
+
+}
+
+.terminal-button:disabled{
+
+    cursor:default;
+
+}
+
+.terminal-button-text{
+
+    white-space:nowrap;
+
+}

@@ -1,0 +1,23 @@
+.builder-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.builder-header h1{
+
+    color:#70ff5c;
+
+    font-size:34px;
+
+    letter-spacing:6px;
+
+    font-weight:400;
+
+}

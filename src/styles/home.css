@@ -1,0 +1,385 @@
+.home {
+    min-height: 100vh;
+
+    background: #0b0b0b;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 80px 0;
+}
+
+.boot-sequence{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    margin:40px 0;
+
+    color:#8a8a8a;
+
+    font-size:18px;
+
+    min-height:220px;
+
+}
+
+.loading{
+
+    margin-top:20px;
+
+    color:#70ff5c;
+
+    letter-spacing:3px;
+
+}
+
+.boot-sequence p{
+
+    animation:fadeIn .3s;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(6px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* Dark overlay so LetterGlitch stays subtle */
+.overlay {
+    width: min(1200px, 90%);
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 40px;
+}
+
+.hero h1{
+
+    font-size:64px;
+
+    line-height:72px;
+
+    font-weight:700;
+
+    letter-spacing:3px;
+
+    text-shadow:
+
+    0 0 5px rgba(255,255,255,.05),
+
+    0 0 15px rgba(112,255,92,.04);
+
+}
+
+.subtitle{
+
+    margin-top:18px;
+
+    color:#7b7b7b;
+
+    letter-spacing:4px;
+
+}
+
+.description{
+
+    margin-top:22px;
+
+    color:#9f9f9f;
+
+}
+
+.terminal-menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.cards{
+
+    display:flex;
+
+    gap:28px;
+
+    margin-top:30px;
+
+    flex-wrap:wrap;
+
+}
+
+.card-header{
+
+    color:#70ff5c;
+
+    letter-spacing:2px;
+
+    margin-bottom:18px;
+
+    font-size:20px;
+
+}
+
+.feature-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #70ff5c,
+        transparent
+    );
+
+    animation: scan 5s linear infinite;
+}
+
+@keyframes scan{
+
+    from{
+
+        left:-100%;
+
+    }
+
+    to{
+
+        left:100%;
+
+    }
+
+}
+
+.feature-card {
+    position: relative;
+
+    width: 300px;
+    height: 330px;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background: #151515;
+    border: 1px solid #303030;
+
+    overflow: hidden;      /* IMPORTANT */
+    isolation: isolate;    /* IMPORTANT */
+
+    transition: .35s;
+    cursor: pointer;
+}
+
+.feature-card:nth-child(2){
+
+    animation-delay:1s;
+
+}
+
+.feature-card h2{
+
+    font-size:22px;
+
+    margin-bottom:18px;
+
+}
+
+.feature-card:nth-child(3){
+
+    animation-delay:2s;
+
+}
+
+@keyframes float{
+
+    0%,100%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-4px);
+
+    }
+
+}
+
+.separator{
+
+    width:100%;
+
+    height:1px;
+
+    background:#333;
+
+    margin-bottom:18px;
+
+}
+
+.content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.content p{
+
+    color:#bdbdbd;
+
+}
+
+.feature-card:hover{
+
+    transform:
+
+        translateY(-8px)
+
+        scale(1.02);
+
+    border-color:#70ff5c;
+
+    box-shadow:
+
+        0 0 18px rgba(112,255,92,.2),
+
+        0 0 40px rgba(112,255,92,.08);
+
+}
+
+.version{
+
+    color:#4f4f4f;
+
+    margin-bottom:18px;
+
+    letter-spacing:5px;
+
+}
+
+.boot-message{
+
+    margin-top:40px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    color:#6c6c6c;
+
+}
+
+.ready{
+
+    color:#70ff5c;
+
+}
+
+.hero{
+
+    margin-bottom:40px;
+
+}
+
+
+.status-bar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    right:0;
+
+    height:40px;
+
+    padding:0 25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-bottom:1px solid #2f2f2f;
+
+    background:rgba(10,10,10,.85);
+
+    backdrop-filter:blur(8px);
+
+    color:#70ff5c;
+
+    z-index:100;
+
+}
+
+.footer-bar{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    right:0;
+
+    height:36px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 25px;
+
+    border-top:1px solid #2f2f2f;
+
+    background:rgba(10,10,10,.85);
+
+    color:#8f8f8f;
+
+}
+
+

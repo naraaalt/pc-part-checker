@@ -1,0 +1,43 @@
+.terminal-link{
+
+    width:max-content;
+
+    color:#bcbcbc;
+
+    font-size:24px;
+
+    transition:.2s;
+
+    cursor:pointer;
+
+}
+
+.terminal-link:hover{
+
+    color:#70ff5c;
+
+    transform:translateX(14px) scale(1.08);
+
+    text-shadow:
+        0 0 10px #70ff5c,
+        0 0 18px #70ff5c;
+
+}
+
+.cursor{
+
+    animation:blink 1s infinite;
+
+    color:#70ff5c;
+
+}
+
+@keyframes blink{
+
+    50%{
+
+        opacity:0;
+
+    }
+
+}

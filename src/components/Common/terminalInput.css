@@ -1,0 +1,95 @@
+.terminal-input {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    position: relative;
+
+    cursor: text;
+
+    font-family: inherit;
+
+}
+
+.terminal-prefix {
+
+    color: #70ff5c;
+
+    transition: .2s;
+
+}
+
+.terminal-display {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 24px;
+
+}
+
+.terminal-text {
+
+    color: #d6d6d6;
+
+    letter-spacing: 1px;
+
+}
+
+.terminal-placeholder {
+
+    color: #555;
+
+    letter-spacing: 1px;
+
+    font-size: 0.85em;
+
+}
+
+.terminal-hidden-input {
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0;
+
+    cursor: text;
+
+}
+
+.terminal-cursor {
+
+    color: #70ff5c;
+
+    animation: cursorBlink .9s steps(1) infinite;
+
+    margin-left: 2px;
+
+}
+
+.focused .terminal-prefix {
+
+    text-shadow: 0 0 8px #70ff5c;
+
+}
+
+.focused .terminal-text {
+
+    color: white;
+
+}
+
+@keyframes cursorBlink {
+
+    50% {
+
+        opacity: 0;
+
+    }
+
+}

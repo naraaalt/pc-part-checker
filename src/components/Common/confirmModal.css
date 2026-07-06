@@ -1,0 +1,128 @@
+/* ═══════════════════════════════════════════
+   ConfirmModal — terminal-style dialog
+   ═══════════════════════════════════════════ */
+
+/* Overlay */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: overlayFadeIn 0.2s ease;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Modal box */
+.confirm-modal {
+  width: min(420px, 90vw);
+  border: 1px solid #333;
+  border-radius: 12px;
+  background: #111;
+  overflow: hidden;
+  animation: modalSlideIn 0.25s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Header */
+.confirm-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid #2a2a2a;
+  background: #0d0d0d;
+}
+
+.confirm-header-text {
+  color: #70ff5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+/* Body */
+.confirm-body {
+  padding: 28px 20px;
+}
+
+.confirm-message {
+  color: #ccc;
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.confirm-warning {
+  color: #ff6464;
+  font-size: 13px;
+  margin: 10px 0 0;
+}
+
+/* Actions */
+.confirm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 20px 16px;
+  border-top: 1px solid #2a2a2a;
+}
+
+/* Each action button – matches build-action-button style */
+.confirm-action-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 8px 0;
+  cursor: pointer;
+  color: #bcbcbc;
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-align: left;
+  transition:
+    color 0.2s,
+    text-shadow 0.2s,
+    transform 0.2s;
+}
+
+.confirm-action-btn::before {
+  content: ">";
+  margin-right: 8px;
+  color: #70ff5c;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.confirm-action-btn:hover {
+  color: #70ff5c;
+  transform: translateX(10px) scale(1.05);
+  text-shadow:
+    0 0 10px #70ff5c,
+    0 0 18px rgba(112, 255, 92, 0.5);
+}
+
+.confirm-action-btn:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
