@@ -107,6 +107,7 @@ export default function Builds() {
                         <p>You haven't saved any builds yet.</p>
                         <TerminalButton 
                             onClick={() => navigate("/builder")} 
+                            loadingText="entering builder..."
                         >
                             create your first build
                         </TerminalButton>
