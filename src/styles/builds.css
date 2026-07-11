@@ -1,0 +1,129 @@
+.builds-page {
+    min-height: 100vh;
+    background: #090909;
+    padding: 90px 0;
+}
+
+.builds-container {
+    width: min(900px, 92%);
+    margin: auto;
+}
+
+.builds-title span {
+    color: #70ff5c;
+    letter-spacing: 5px;
+    font-size: 14px;
+}
+
+.builds-title h1 {
+    font-size: 52px;
+    margin: 12px 0;
+}
+
+.builds-title p {
+    color: #777;
+    margin-bottom: 40px;
+}
+
+.builds-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.build-card {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 24px;
+    transition: 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.build-card:hover {
+    border-color: #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.build-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.build-name-display {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.build-name-display h3 {
+    font-size: 24px;
+    color: #fff;
+    margin: 0;
+}
+
+.build-name-display span {
+    font-size: 13px;
+    color: #666;
+}
+
+.build-name-input {
+    background: #1a1a1a;
+    border: 1px solid #70ff5c;
+    color: white;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 6px;
+    outline: none;
+    width: 250px;
+}
+
+.build-stats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.build-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.build-stat-label {
+    font-size: 11px;
+    color: #777;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.build-stat-value {
+    font-size: 18px;
+    color: #70ff5c;
+    font-family: monospace;
+}
+
+.build-actions-row {
+    display: flex;
+    gap: 16px;
+    border-top: 1px solid #222;
+    padding-top: 16px;
+}
+
+.empty-builds {
+    text-align: center;
+    padding: 60px 20px;
+    background: #111;
+    border: 1px dashed #333;
+    border-radius: 14px;
+    color: #777;
+}
+
+.empty-builds p {
+    margin-bottom: 20px;
+}

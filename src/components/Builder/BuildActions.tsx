@@ -1,9 +1,11 @@
 import { useBuild } from "../../context/BuildContext";
 import { useState } from "react";
+import { saveBuild } from "../../utils/buildStorage";
+
 export default function BuildActions() {
 
     const [status, setStatus] = useState("");
-    const { build, setBuild } = useBuild();
+    const { build, setBuild, setSavedSnapshot, setCurrentBuildId, resetBuild } = useBuild();
     const [actionState, setActionState] = useState({
 
         save: "idle",
@@ -76,10 +78,14 @@ export default function BuildActions() {
             return;
         }
 
-        localStorage.setItem(
-            "savedBuild",
-            JSON.stringify(build)
-        );
+        const saved = saveBuild(build);
+        
+        if (!build.id) {
+            setBuild(prev => ({ ...prev, id: saved.id }));
+            setCurrentBuildId(saved.id);
+        }
+        
+        setSavedSnapshot(saved.build);
 
         setStatus("Build saved successfully.");
 
@@ -90,14 +96,7 @@ export default function BuildActions() {
     }
 
     function handleClear() {
-
-        setBuild({
-
-            buildName: "",
-
-        });
-
-        localStorage.removeItem("savedBuild");
+        resetBuild();
 
         setStatus("Build cleared.");
 

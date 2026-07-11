@@ -6,7 +6,8 @@ import SummaryPanel from "../components/Builder/SummaryPanel";
 import BuilderHeader from "../components/Builder/BuilderHeader";
 
 import { useBuild } from "../context/BuildContext";
-import { useNavigate, useBlocker } from "react-router-dom";
+import { useBlocker, useSearchParams } from "react-router-dom";
+import { getBuild, saveBuild } from "../utils/buildStorage";
 import ConfirmModal from "../components/Common/ConfirmModal";
 
 import { cpus } from "../data/cpu";
@@ -24,15 +25,19 @@ export default function Builder() {
 
         setBuild,
         resetBuild,
-
+        isDirty,
+        loadSnapshot,
+        currentBuildId,
+        setCurrentBuildId,
+        setSavedSnapshot,
     } = useBuild();
-
-    const hasParts = !!(build.cpu || build.gpu || build.motherboard || build.ram || build.storage || build.psu);
+    
+    const [searchParams] = useSearchParams();
+    const buildId = searchParams.get("id");
     
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            const hasSavedNow = !!localStorage.getItem('savedBuild');
-            return hasParts && !hasSavedNow && currentLocation.pathname !== nextLocation.pathname;
+            return isDirty && currentLocation.pathname !== nextLocation.pathname;
         }
     );
 
@@ -52,7 +57,12 @@ export default function Builder() {
             setModalWarning("Please enter a build name before saving.");
             return;
         }
-        localStorage.setItem('savedBuild', JSON.stringify(build));
+        const saved = saveBuild(build);
+        if (!build.id) {
+            setBuild(prev => ({ ...prev, id: saved.id }));
+            setCurrentBuildId(saved.id);
+        }
+        setSavedSnapshot(saved.build);
         setModalWarning("");
         pendingBlocker?.proceed();
         setShowConfirm(false);
@@ -60,7 +70,6 @@ export default function Builder() {
 
     const handleReturnWithoutSaving = () => {
         resetBuild();
-        localStorage.removeItem('savedBuild');
         setModalWarning("");
         pendingBlocker?.proceed();
         setShowConfirm(false);
@@ -74,36 +83,27 @@ export default function Builder() {
 
     useEffect(() => {
         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-            if (hasParts) {
+            if (isDirty) {
                 e.preventDefault();
                 e.returnValue = "";
             }
         };
         window.addEventListener("beforeunload", handleBeforeUnload);
         return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-    }, [hasParts]);
+    }, [isDirty]);
 
     useEffect(() => {
-
-    const savedBuild = localStorage.getItem("savedBuild");
-
-    if (!savedBuild) {
-
-        return;
-
-    }
-
-    try {
-
-        setBuild(JSON.parse(savedBuild));
-
-    } catch {
-
-        console.error("Failed to load saved build.");
-
-    }
-
-}, []);
+        if (buildId) {
+            if (buildId !== currentBuildId) {
+                const saved = getBuild(buildId);
+                if (saved) {
+                    loadSnapshot(saved);
+                }
+            }
+        }
+        // Only reset when switching from a build URL to no build URL
+        // (i.e., explicitly navigated to /builder without an id)
+    }, [buildId]);
     useEffect(() => {
 
         if (
@@ -166,7 +166,6 @@ const filteredPsus = psus.filter(
                     </div>
 
                     <ComponentRow
-
                         label="CPU"
 
                         placeholder="Search CPU"
@@ -186,7 +185,6 @@ const filteredPsus = psus.filter(
                             }))
 
                         }
-
                     />
 
                     <ComponentRow
@@ -213,7 +211,6 @@ const filteredPsus = psus.filter(
                             }))
                         }
                     />
-
                     <ComponentRow
 
                         label="GPU"
@@ -235,7 +232,6 @@ const filteredPsus = psus.filter(
                             }))
 
                         }
-
                     />
 
                     <ComponentRow
@@ -264,7 +260,6 @@ const filteredPsus = psus.filter(
                     />
 
                     <ComponentRow
-
                         label="Storage"
 
                         placeholder="Search Storage"
@@ -284,7 +279,6 @@ const filteredPsus = psus.filter(
                             }))
 
                         }
-
                     />
 
                     <ComponentRow
@@ -312,10 +306,15 @@ const filteredPsus = psus.filter(
             {showConfirm && (
                 <ConfirmModal
                     open={showConfirm}
+                    title="RETURN HOME"
+                    message="You have unsaved changes."
                     warning={modalWarning}
-                    onSaveAndReturn={handleSaveAndReturn}
-                    onReturnWithoutSaving={handleReturnWithoutSaving}
-                    onStay={handleStay}
+                    btnSaveLabel="save & exit"
+                    btnDiscardLabel="discard & exit"
+                    btnCancelLabel="cancel"
+                    onSave={handleSaveAndReturn}
+                    onDiscard={handleReturnWithoutSaving}
+                    onCancel={handleStay}
                 />
             )}
             </div>

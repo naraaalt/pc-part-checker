@@ -4,43 +4,53 @@ import "./confirmModal.css";
 
 type Props = {
   open: boolean;
+  title: string;
+  message: string;
   warning?: string;
-  onSaveAndReturn: () => void;
-  onReturnWithoutSaving: () => void;
-  onStay: () => void;
+  btnSaveLabel: string;
+  btnDiscardLabel: string;
+  btnCancelLabel: string;
+  onSave: () => void;
+  onDiscard: () => void;
+  onCancel: () => void;
 };
 
 export default function ConfirmModal({
   open,
+  title,
+  message,
   warning,
-  onSaveAndReturn,
-  onReturnWithoutSaving,
-  onStay,
+  btnSaveLabel,
+  btnDiscardLabel,
+  btnCancelLabel,
+  onSave,
+  onDiscard,
+  onCancel,
 }: Props) {
   if (!open) return null;
 
   return ReactDOM.createPortal(
-    <div className="confirm-overlay" onClick={onStay}>
+    <div className="confirm-overlay" onClick={onCancel}>
       <div className="confirm-modal" onClick={(e) => e.stopPropagation()}>
 
         <div className="confirm-header">
-          <span className="confirm-header-text">RETURN HOME</span>
+          <span className="confirm-header-text">{title}</span>
         </div>
 
         <div className="confirm-body">
-          <p className="confirm-message">Unsaved changes detected.</p>
+          <p className="confirm-message">{message}</p>
           {warning && <p className="confirm-warning">{warning}</p>}
         </div>
 
         <div className="confirm-actions">
-          <button className="confirm-action-btn" onClick={onSaveAndReturn}>
-            save &amp; return
+          <button className="confirm-action-btn" onClick={onSave}>
+            {btnSaveLabel}
           </button>
-          <button className="confirm-action-btn" onClick={onReturnWithoutSaving}>
-            return without saving
+          <button className="confirm-action-btn" onClick={onDiscard}>
+            {btnDiscardLabel}
           </button>
-          <button className="confirm-action-btn" onClick={onStay}>
-            stay
+          <button className="confirm-action-btn" onClick={onCancel}>
+            {btnCancelLabel}
           </button>
         </div>
 

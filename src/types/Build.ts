@@ -9,6 +9,8 @@ export interface Build {
 
     buildName: string;
 
+    id?: string;
+
     cpu?: CPU;
 
     motherboard?: Motherboard;
