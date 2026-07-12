@@ -11,6 +11,15 @@
     --warning: #ffd65c;
     --border: #303030;
     --border-subtle: #2a2a2a;
+    --fg-bright: #fff;
+    --fg-secondary: #bcbcbc;
+    --fg-dim: #777;
+    --bg-recessed: #101010;
+    --bg-panel: #181818;
+    --border-strong: #333;
+    --accent-glow: 112, 255, 92;
+    --bar-bg: rgba(10, 10, 10, 0.85);
+    --overlay-scrim: rgba(0, 0, 0, 0.65);
 
     --z-bar: 100;
     --z-dropdown: 200;
@@ -88,6 +97,15 @@ html.light-theme {
     --warning: #b8860b;
     --border: #c0c0c0;
     --border-subtle: #d0d0d0;
+    --fg-bright: #111;
+    --fg-secondary: #444;
+    --fg-dim: #666;
+    --bg-recessed: #e2e2e2;
+    --bg-panel: #d8d8d8;
+    --border-strong: #b0b0b0;
+    --accent-glow: 26, 138, 14;
+    --bar-bg: rgba(240, 240, 240, 0.85);
+    --overlay-scrim: rgba(0, 0, 0, 0.35);
 }
 
 html.light-theme body {

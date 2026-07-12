@@ -16,7 +16,7 @@
 
 .terminal-prefix {
 
-    color: #70ff5c;
+    color: var(--accent);
 
     transition: .2s;
 
@@ -34,7 +34,7 @@
 
 .terminal-text {
 
-    color: #d6d6d6;
+    color: var(--fg);
 
     letter-spacing: 1px;
 
@@ -42,7 +42,7 @@
 
 .terminal-placeholder {
 
-    color: #555;
+    color: var(--fg-muted);
 
     letter-spacing: 1px;
 
@@ -64,7 +64,7 @@
 
 .terminal-cursor {
 
-    color: #70ff5c;
+    color: var(--accent);
 
     animation: cursorBlink .9s steps(1) infinite;
 
@@ -74,13 +74,13 @@
 
 .focused .terminal-prefix {
 
-    text-shadow: 0 0 8px #70ff5c;
+    text-shadow: 0 0 8px var(--accent);
 
 }
 
 .focused .terminal-text {
 
-    color: white;
+    color: var(--fg-bright);
 
 }
 

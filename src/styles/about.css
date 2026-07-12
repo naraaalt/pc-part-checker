@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     background-color: var(--bg);
-    color: #e0e0e0;
+    color: var(--fg-secondary);
     font-family: monospace;
     overflow: auto;
     padding: calc(var(--bar-top) + 20px) 20px calc(var(--bar-bottom) + 20px);
@@ -14,8 +14,8 @@
 .about-window {
     width: 90%;
     max-width: 600px;
-    border: 1px solid #333;
-    background-color: #000;
+    border: 1px solid var(--border-strong);
+    background-color: var(--bg-recessed);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
@@ -24,7 +24,7 @@
 .about-bar {
     height: 30px;
     background-color: var(--bg-elevated);
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border-strong);
     display: flex;
     align-items: center;
     padding: 0 10px;
@@ -35,7 +35,7 @@
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background: #333;
+    background: var(--border-strong);
 }
 
 .about-bar .dot:nth-child(1) {
@@ -66,10 +66,10 @@
 .about-title {
     font-size: 1.5rem;
     font-weight: normal;
-    color: #fff;
+    color: var(--fg-bright);
     margin: 0;
     text-align: center;
-    border-bottom: 1px dashed #333;
+    border-bottom: 1px dashed var(--border-strong);
     padding-bottom: 1rem;
 }
 
@@ -83,7 +83,7 @@
 .about-section p {
     font-size: 0.9rem;
     line-height: 1.5;
-    color: #ccc;
+    color: var(--fg-secondary);
     margin: 0;
 }
 
@@ -98,7 +98,7 @@
 
 .about-list li {
     font-size: 0.9rem;
-    color: #ccc;
+    color: var(--fg-secondary);
     display: flex;
     gap: 1rem;
 }
@@ -116,10 +116,10 @@
 
 .tech-grid span {
     background-color: var(--bg-elevated);
-    border: 1px solid #333;
+    border: 1px solid var(--border-strong);
     padding: 0.3rem 0.8rem;
     font-size: 0.85rem;
-    color: #aaa;
+    color: var(--fg-secondary);
 }
 
 .about-actions {

@@ -32,8 +32,8 @@
 }
 
 .build-card {
-    background: #111;
-    border: 1px solid #222;
+    background: var(--bg-recessed);
+    border: 1px solid var(--border-subtle);
     border-radius: 14px;
     padding: 24px;
     transition: 0.25s;
@@ -46,8 +46,8 @@
 .build-card:hover {
     border-color: var(--accent);
     box-shadow:
-        0 0 18px rgba(112, 255, 92, 0.18),
-        0 0 40px rgba(112, 255, 92, 0.06);
+        0 0 18px rgba(var(--accent-glow), 0.18),
+        0 0 40px rgba(var(--accent-glow), 0.06);
 }
 
 .build-card-header {
@@ -65,19 +65,19 @@
 
 .build-name-display h3 {
     font-size: 24px;
-    color: #fff;
+    color: var(--fg-bright);
     margin: 0;
 }
 
 .build-name-display span {
     font-size: 13px;
-    color: #666;
+    color: var(--fg-dim);
 }
 
 .build-name-input {
     background: var(--bg-elevated);
     border: 1px solid var(--accent);
-    color: white;
+    color: var(--fg-bright);
     font-family: inherit;
     font-size: 24px;
     font-weight: bold;
@@ -101,7 +101,7 @@
 
 .build-stat-label {
     font-size: 11px;
-    color: #777;
+    color: var(--fg-dim);
     letter-spacing: 1px;
     text-transform: uppercase;
 }
@@ -115,17 +115,17 @@
 .build-actions-row {
     display: flex;
     gap: 16px;
-    border-top: 1px solid #222;
+    border-top: 1px solid var(--border-subtle);
     padding-top: 16px;
 }
 
 .empty-builds {
     text-align: center;
     padding: 60px 20px;
-    background: #111;
-    border: 1px dashed #333;
+    background: var(--bg-recessed);
+    border: 1px dashed var(--border-strong);
     border-radius: 14px;
-    color: #777;
+    color: var(--fg-dim);
 }
 
 .empty-builds p {

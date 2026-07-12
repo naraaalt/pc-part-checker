@@ -14,7 +14,7 @@
 
     cursor:pointer;
 
-    color:#777;
+    color: var(--fg-dim);
 
     font-family:monospace;
 
@@ -33,7 +33,7 @@
 
     color:var(--accent);
 
-    text-shadow:0 0 8px rgba(112,255,92,.5);
+    text-shadow:0 0 8px rgba(var(--accent-glow), .5);
 
 }
 
@@ -81,7 +81,7 @@
 
     width:max-content;
 
-    color:#bcbcbc;
+    color: var(--fg-secondary);
 
     font-size:15px;
 

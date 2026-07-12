@@ -2,7 +2,7 @@
 
     width:max-content;
 
-    color:#bcbcbc;
+    color: var(--fg-secondary);
 
     font-size:24px;
 
@@ -34,13 +34,11 @@
 
 .terminal-link:hover{
 
-    color:#70ff5c;
+    color: var(--accent);
 
     transform:translateX(14px) scale(1.08);
 
-    text-shadow:
-        0 0 10px #70ff5c,
-        0 0 18px #70ff5c;
+    text-shadow: 0 0 10px var(--accent), 0 0 18px var(--accent);
 
 }
 
@@ -48,7 +46,7 @@
 
     animation:blink 1s infinite;
 
-    color:#70ff5c;
+    color: var(--accent);
 
 }
 

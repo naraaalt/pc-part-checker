@@ -6,7 +6,7 @@
 .confirm-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: var(--overlay-scrim);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -23,9 +23,9 @@
 /* Modal box */
 .confirm-modal {
   width: min(420px, 90vw);
-  border: 1px solid #333;
+  border: 1px solid var(--border-strong);
   border-radius: 12px;
-  background: #111;
+  background: var(--bg-recessed);
   overflow: hidden;
   animation: modalSlideIn 0.25s ease;
 }
@@ -44,8 +44,8 @@
 /* Header */
 .confirm-header {
   padding: 14px 20px;
-  border-bottom: 1px solid #2a2a2a;
-  background: #0d0d0d;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-recessed);
 }
 
 .confirm-header-text {
@@ -62,7 +62,7 @@
 }
 
 .confirm-message {
-  color: #ccc;
+  color: var(--fg-secondary);
   font-size: 15px;
   line-height: 1.5;
   margin: 0;
@@ -80,7 +80,7 @@
   flex-direction: column;
   gap: 2px;
   padding: 10px 20px 16px;
-  border-top: 1px solid #2a2a2a;
+  border-top: 1px solid var(--border-subtle);
 }
 
 /* Each action button – matches build-action-button style */
@@ -92,7 +92,7 @@
   border: none;
   padding: 8px 0;
   cursor: pointer;
-  color: #bcbcbc;
+  color: var(--fg-secondary);
   font-family: inherit;
   font-size: 13px;
   letter-spacing: 1px;
@@ -119,7 +119,7 @@
   transform: translateX(10px) scale(1.05);
   text-shadow:
     0 0 10px var(--accent),
-    0 0 18px rgba(112, 255, 92, 0.5);
+    0 0 18px rgba(var(--accent-glow), 0.5);
 }
 
 .confirm-action-btn:hover::before {
