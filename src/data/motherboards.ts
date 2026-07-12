@@ -115,6 +115,23 @@ export const motherboards: Motherboard[] = [
         sataPorts: 4,
         wifi: true,
         price: 469
+    },
+
+    {
+        id: 6,
+        brand: "MSI",
+        name: "MEG Z890 ACE",
+        socket: "LGA1851",
+        chipset: "Z890",
+        formFactor: "ATX",
+        ramType: "DDR5",
+        ramSlots: 4,
+        maxMemory: 192,
+        pcie: "5.0",
+        m2Slots: 5,
+        sataPorts: 4,
+        wifi: true,
+        price: 649
     }
 
 ];

@@ -94,6 +94,7 @@ export default function Builds() {
             <title>My Builds</title>
             
             <div className="builds-container">
+                
                 <BuilderHeader />
                 
                 <div className="builds-title" style={{ marginTop: "40px" }}>

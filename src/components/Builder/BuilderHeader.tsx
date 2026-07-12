@@ -13,6 +13,7 @@ export default function BuilderHeader() {
             <TerminalButton
                 className="terminal-link"
                 onClick={() => navigate("/")}
+                loadingText="returning home..."
             >
 
                 return home

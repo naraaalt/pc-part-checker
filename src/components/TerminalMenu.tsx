@@ -21,8 +21,8 @@ export default function TerminalMenu() {
             path: "/builds"
         },
         {
-            text: "documentation",
-            path: "/docs"
+            text: "about",
+            path: "/about"
         }
     ];
 
