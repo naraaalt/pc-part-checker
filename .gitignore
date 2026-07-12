@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-PLANS.txt
+THEME_FIX_PROMPT.md
 node_modules
 dist
 dist-ssr
