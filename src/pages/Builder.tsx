@@ -30,14 +30,17 @@ export default function Builder() {
         currentBuildId,
         setCurrentBuildId,
         setSavedSnapshot,
+        isShared,
+        setIsShared,
     } = useBuild();
     
     const [searchParams] = useSearchParams();
     const buildId = searchParams.get("id");
+    const sharedHash = searchParams.get("build");
     
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            return isDirty && currentLocation.pathname !== nextLocation.pathname;
+            return isDirty && (currentLocation.pathname !== nextLocation.pathname || currentLocation.search !== nextLocation.search);
         }
     );
 
@@ -93,7 +96,15 @@ export default function Builder() {
     }, [isDirty]);
 
     useEffect(() => {
-        if (buildId) {
+        if (sharedHash) {
+            import("../utils/shareUrl").then(({ decodeBuild }) => {
+                const decoded = decodeBuild(sharedHash);
+                if (decoded) {
+                    setBuild(decoded);
+                    setIsShared(true);
+                }
+            });
+        } else if (buildId) {
             if (buildId !== currentBuildId) {
                 const saved = getBuild(buildId);
                 if (saved) {
@@ -103,7 +114,11 @@ export default function Builder() {
         }
         // Only reset when switching from a build URL to no build URL
         // (i.e., explicitly navigated to /builder without an id)
-    }, [buildId]);
+    }, [buildId, sharedHash]);
+
+    useEffect(() => {
+        document.title = "Builder — PC Part Checker";
+    }, []);
     useEffect(() => {
 
         if (
@@ -145,7 +160,7 @@ const filteredPsus = psus.filter(
 
         <main className="builder-page">
 
-        <title>Builder</title>
+
 
             <div className="builder-container">
 
@@ -167,43 +182,30 @@ const filteredPsus = psus.filter(
 
                     <ComponentRow
                         label="CPU"
-
                         placeholder="Search CPU"
-
                         options={cpus}
-
                         value={build.cpu}
-
+                        disabled={isShared}
                         onChange={(cpu) =>
-
                             setBuild(previous => ({
-
                                 ...previous,
-
                                 cpu,
-
                             }))
-
                         }
                     />
 
                     <ComponentRow
                         label="Motherboard"
                         placeholder="Search Motherboard"
-
                         options={filteredMotherboards}
-
                         value={build.motherboard}
-
-                        disabled={!build.cpu}
+                        disabled={isShared || !build.cpu}
                         disabledPlaceholder="Waiting for CPU..."
-
                         helperText={
                             build.cpu
                                 ? `Compatible with ${build.cpu.socket} (${filteredMotherboards.length} found)`
                                 : "Select a CPU first"
                         }
-
                         onChange={(motherboard) =>
                             setBuild(previous => ({
                                 ...previous,
@@ -212,45 +214,31 @@ const filteredPsus = psus.filter(
                         }
                     />
                     <ComponentRow
-
                         label="GPU"
-
                         placeholder="Search GPU"
-
                         options={gpus}
-
                         value={build.gpu}
-
+                        disabled={isShared}
                         onChange={(gpu)=>
-
                             setBuild(previous=>({
-
                                 ...previous,
-
                                 gpu,
-
                             }))
-
                         }
                     />
 
                     <ComponentRow
                         label="Memory"
                         placeholder="Search RAM"
-
                         options={filteredRam}
-
                         value={build.ram}
-
-                        disabled={!build.motherboard}
+                        disabled={isShared || !build.motherboard}
                         disabledPlaceholder="Waiting for Motherboard..."
-
                         helperText={
                             build.motherboard
                                 ? `${build.motherboard.ramType} Memory (${filteredRam.length} found)`
                                 : "Select a motherboard first"
                         }
-
                         onChange={(ram) =>
                             setBuild(previous => ({
                                 ...previous,
@@ -261,23 +249,15 @@ const filteredPsus = psus.filter(
 
                     <ComponentRow
                         label="Storage"
-
                         placeholder="Search Storage"
-
                         options={storages}
-
                         value={build.storage}
-
+                        disabled={isShared}
                         onChange={(storage)=>
-
                             setBuild(previous=>({
-
                                 ...previous,
-
                                 storage,
-
                             }))
-
                         }
                     />
 
@@ -286,6 +266,7 @@ const filteredPsus = psus.filter(
                         placeholder="Search PSU"
                         options={filteredPsus}
                         value={build.psu}
+                        disabled={isShared}
                         helperText={
                             requiredPower > 0
                                 ? `Recommended ≥ ${requiredPower + 150}W`

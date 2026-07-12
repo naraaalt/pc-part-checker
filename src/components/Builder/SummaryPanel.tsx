@@ -7,7 +7,7 @@ import TerminalInput from "../Common/TerminalInput";
 import BuildActions from "./BuildActions";
 export default function SummaryPanel() {
 
-    const { build, setBuild } = useBuild();
+    const { build, setBuild, isShared } = useBuild();
 
     const selectedParts = [
         build.cpu,
@@ -38,7 +38,7 @@ export default function SummaryPanel() {
 
         <aside className="summary-panel">
 
-            <h2>CURRENT BUILD</h2>
+            <h2>{isShared ? "SHARED BUILD" : "CURRENT BUILD"}</h2>
                 <div className="build-name">
 
                     <span>
@@ -46,23 +46,26 @@ export default function SummaryPanel() {
                         NAME
 
                     </span>
+                        {isShared ? (
+                            <span className="build-name-display-text">{build.buildName}</span>
+                        ) : (
+                            <TerminalInput
+                                value={build.buildName}
+                                placeholder="Untitled Build"
+                                maxLength={30}
+                                onChange={(value) =>
 
-                        <TerminalInput
-                            value={build.buildName}
-                            placeholder="Untitled Build"
-                            maxLength={30}
-                            onChange={(value) =>
+                                    setBuild({
 
-                                setBuild({
+                                        ...build,
 
-                                    ...build,
+                                        buildName: value,
 
-                                    buildName: value,
+                                    })
 
-                                })
-
-                            }
-                        />
+                                }
+                            />
+                        )}
 
                 </div>
             <hr />
@@ -340,6 +343,20 @@ function ExpandableBuildItem({
                         </div>
 
                     ))}
+                    
+                    {value && (
+                        <div className="spec-row" style={{ marginTop: '10px' }}>
+                            <span>Buy</span>
+                            <a 
+                                href={`https://www.amazon.com/s?k=${encodeURIComponent(value)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: 'var(--accent)', textDecoration: 'underline' }}
+                            >
+                                Search on Amazon ↗
+                            </a>
+                        </div>
+                    )}
 
                 </div>
 

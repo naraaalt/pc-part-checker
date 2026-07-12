@@ -100,6 +100,29 @@ export const gpus: GPU[] = [
         power: 263,
         pcie: "4.0",
         price: 499
+    },
+    {
+        id: 7,
+        brand: "NVIDIA",
+        name: "RTX 4090",
+        chipset: "AD102",
+        memory: 24,
+        memoryType: "GDDR6X",
+        length: 336,
+        power: 450,
+        pcie: "4.0",
+        price: 1599
+    },
+    {
+        id: 8,
+        brand: "AMD",
+        name: "RX 7900 XTX",
+        chipset: "Navi 31",
+        memory: 24,
+        memoryType: "GDDR6",
+        length: 287,
+        power: 355,
+        pcie: "4.0",
+        price: 999
     }
-
 ];

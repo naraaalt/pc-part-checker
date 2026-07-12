@@ -6,7 +6,7 @@ export default function BuildActions() {
 
     const [status, setStatus] = useState("");
     const { build, setBuild, setSavedSnapshot, setCurrentBuildId, resetBuild } = useBuild();
-    const [actionState, setActionState] = useState({
+    const [, setActionState] = useState({
 
         save: "idle",
 
@@ -164,22 +164,73 @@ export default function BuildActions() {
 
             }, 2500);
         });
-
     }
+
+    function handleSaveToMyBuilds() {
+        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu) {
+            setStatus("Please pick a part first.");
+            setTimeout(() => setStatus(""), 2500);
+            return;
+        }
+
+        const buildCopy = { ...build, id: undefined, buildName: build.buildName + " (Shared)" };
+        const saved = saveBuild(buildCopy);
+        
+        setBuild(prev => ({ ...prev, id: saved.id, buildName: saved.name }));
+        setCurrentBuildId(saved.id);
+        setSavedSnapshot(saved.build);
+        setIsShared(false); // No longer shared, now owned
+
+        setStatus("Saved to my builds.");
+        setTimeout(() => setStatus(""), 2500);
+    }
+
+    function handleShare() {
+        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu) {
+            setStatus("Please pick a part first.");
+            setTimeout(() => setStatus(""), 2500);
+            return;
+        }
+
+        import("../../utils/shareUrl").then(({ encodeBuild }) => {
+            const hash = encodeBuild(build);
+            const url = `${window.location.origin}/builder?build=${encodeURIComponent(hash)}`;
+            navigator.clipboard.writeText(url).then(() => {
+                setStatus("Share link copied!");
+                setTimeout(() => setStatus(""), 2500);
+            });
+        });
+    }
+
+    const { isShared, setIsShared } = useBuild();
 
     return (
 
         <div className="build-actions">
 
-            {status}
+            {status && <span className="build-status">{status}</span>}
+
+            {isShared ? (
+                <button
+                    className="build-action-button"
+                    onClick={handleSaveToMyBuilds}
+                >
+                    save to my builds
+                </button>
+            ) : (
+                <button
+                    className="build-action-button"
+                    onClick={handleSave}
+                >
+                    save build
+                </button>
+            )}
 
             <button
                 className="build-action-button"
-                onClick={handleSave}
+                onClick={handleShare}
             >
-
-                save build
-
+                copy share link
             </button>
 
             <button
@@ -191,17 +242,18 @@ export default function BuildActions() {
 
             </button>
 
-            <button
-                className="build-action-button"
-                onClick={handleClear}
-            >
+            {!isShared && (
+                <button
+                    className="build-action-button"
+                    onClick={handleClear}
+                >
 
-                clear build
+                    clear build
 
-            </button>
+                </button>
+            )}
 
         </div>
 
     );
-
 }

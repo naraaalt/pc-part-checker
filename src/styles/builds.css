@@ -1,7 +1,7 @@
 .builds-page {
     min-height: 100vh;
-    background: #090909;
-    padding: 90px 0;
+    background: var(--bg);
+    padding: calc(var(--bar-top) + 50px) 0 calc(var(--bar-bottom) + 20px);
 }
 
 .builds-container {
@@ -10,7 +10,7 @@
 }
 
 .builds-title span {
-    color: #70ff5c;
+    color: var(--accent);
     letter-spacing: 5px;
     font-size: 14px;
 }
@@ -21,7 +21,7 @@
 }
 
 .builds-title p {
-    color: #777;
+    color: var(--fg-muted);
     margin-bottom: 40px;
 }
 
@@ -36,14 +36,18 @@
     border: 1px solid #222;
     border-radius: 14px;
     padding: 24px;
-    transition: 0.2s;
+    transition: 0.25s;
     position: relative;
     overflow: hidden;
+    opacity: 0;
+    animation: slideUpFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .build-card:hover {
-    border-color: #333;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent);
+    box-shadow:
+        0 0 18px rgba(112, 255, 92, 0.18),
+        0 0 40px rgba(112, 255, 92, 0.06);
 }
 
 .build-card-header {
@@ -71,8 +75,8 @@
 }
 
 .build-name-input {
-    background: #1a1a1a;
-    border: 1px solid #70ff5c;
+    background: var(--bg-elevated);
+    border: 1px solid var(--accent);
     color: white;
     font-family: inherit;
     font-size: 24px;
@@ -104,7 +108,7 @@
 
 .build-stat-value {
     font-size: 18px;
-    color: #70ff5c;
+    color: var(--accent);
     font-family: monospace;
 }
 
@@ -127,3 +131,15 @@
 .empty-builds p {
     margin-bottom: 20px;
 }
+
+.builds-title {
+    opacity: 0;
+    animation: slideUpFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.build-card:nth-child(1) { animation-delay: 0.1s; }
+.build-card:nth-child(2) { animation-delay: 0.2s; }
+.build-card:nth-child(3) { animation-delay: 0.3s; }
+.build-card:nth-child(4) { animation-delay: 0.4s; }
+.build-card:nth-child(5) { animation-delay: 0.5s; }
+.build-card:nth-child(n+6) { animation-delay: 0.6s; }

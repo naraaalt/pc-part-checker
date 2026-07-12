@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getBuilds, deleteBuild, saveBuild } from "../utils/buildStorage";
 import type { BuildSave } from "../types/BuildSave";
 
-import BuilderHeader from "@/components/Builder/BuilderHeader";
+import BuilderHeader from "../components/Builder/BuilderHeader";
 import TerminalButton from "../components/Common/TerminalButton";
 import ConfirmModal from "../components/Common/ConfirmModal";
 import { useBuild } from "../context/BuildContext";
@@ -23,6 +23,10 @@ export default function Builds() {
 
     useEffect(() => {
         setBuilds(getBuilds());
+    }, []);
+
+    useEffect(() => {
+        document.title = "My Builds — PC Part Checker";
     }, []);
 
     const handleOpen = (id: string) => {
@@ -89,24 +93,60 @@ export default function Builds() {
         setEditingId(null);
     };
 
+    const handleImportJson = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const json = JSON.parse(event.target?.result as string);
+                if (json.buildName) {
+                    const newBuild = { ...json, id: undefined, buildName: json.buildName + " (Imported)" };
+                    saveBuild(newBuild);
+                    setBuilds(getBuilds());
+                    alert("Build imported successfully!");
+                } else {
+                    alert("Invalid build JSON file.");
+                }
+            } catch (err) {
+                alert("Failed to parse JSON.");
+            }
+        };
+        reader.readAsText(file);
+        e.target.value = ''; // reset input
+    };
+
     return (
         <main className="builds-page">
-            <title>My Builds</title>
+
             
             <div className="builds-container">
                 
                 <BuilderHeader />
                 
                 <div className="builds-title" style={{ marginTop: "40px" }}>
-                    <span>MY BUILDS</span>
-                    <h1>Build Library</h1>
-                    <p>Manage, edit, and duplicate your saved PC builds.</p>
+                    <span>SAVED BUILDS</span>
+                    <h1>Browse Builds</h1>
+                    <p>Manage, duplicate, or delete your previously saved configurations.</p>
+                </div>
+                
+                <div style={{ marginBottom: "20px" }}>
+                    <label className="build-action-button" style={{ cursor: 'pointer' }}>
+                        import json
+                        <input 
+                            type="file" 
+                            accept=".json" 
+                            style={{ display: 'none' }} 
+                            onChange={handleImportJson} 
+                        />
+                    </label>
                 </div>
 
                 {builds.length === 0 ? (
                     <div className="empty-builds">
-                        <p>You haven't saved any builds yet.</p>
-                        <TerminalButton 
+                        <p>No builds saved yet.</p>
+                        <TerminalButton
                             onClick={() => navigate("/builder")} 
                             loadingText="entering builder..."
                         >
@@ -190,6 +230,17 @@ export default function Builds() {
                                     <div className="build-actions-row">
                                         <button className="build-action-button" onClick={() => handleOpen(buildSave.id)}>
                                             open
+                                        </button>
+                                        <button className="build-action-button" onClick={() => {
+                                            import("../utils/shareUrl").then(({ encodeBuild }) => {
+                                                const hash = encodeBuild(buildSave.build);
+                                                const url = `${window.location.origin}/builder?build=${encodeURIComponent(hash)}`;
+                                                navigator.clipboard.writeText(url).then(() => {
+                                                    alert("Share link copied!");
+                                                });
+                                            });
+                                        }}>
+                                            share
                                         </button>
                                         <button className="build-action-button" onClick={() => startEditing(buildSave)}>
                                             rename

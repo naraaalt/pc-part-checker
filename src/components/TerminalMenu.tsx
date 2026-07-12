@@ -21,6 +21,10 @@ export default function TerminalMenu() {
             path: "/builds"
         },
         {
+            text: "compare builds",
+            path: "/compare"
+        },
+        {
             text: "about",
             path: "/about"
         }

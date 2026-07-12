@@ -21,6 +21,8 @@ interface BuildContextType {
     currentBuildId: string | null;
     setCurrentBuildId: React.Dispatch<React.SetStateAction<string | null>>;
     isDirty: boolean;
+    isShared: boolean;
+    setIsShared: React.Dispatch<React.SetStateAction<boolean>>;
     resetBuild: () => void;
     loadSnapshot: (buildSave: import("../types/BuildSave").BuildSave) => void;
 }
@@ -31,19 +33,22 @@ export function BuildProvider({ children }: { children: ReactNode }) {
     const [build, setBuild] = useState<Build>(defaultBuild);
     const [savedSnapshot, setSavedSnapshot] = useState<Build | null>(null);
     const [currentBuildId, setCurrentBuildId] = useState<string | null>(null);
+    const [isShared, setIsShared] = useState<boolean>(false);
 
-    const isDirty = JSON.stringify(build) !== JSON.stringify(savedSnapshot || defaultBuild);
+    const isDirty = !isShared && JSON.stringify(build) !== JSON.stringify(savedSnapshot || defaultBuild);
 
     function resetBuild() {
         setBuild({ ...defaultBuild });
         setSavedSnapshot(null);
         setCurrentBuildId(null);
+        setIsShared(false);
     }
 
     function loadSnapshot(buildSave: import("../types/BuildSave").BuildSave) {
         setBuild({ ...buildSave.build });
         setSavedSnapshot({ ...buildSave.build });
         setCurrentBuildId(buildSave.id);
+        setIsShared(false);
     }
 
     return (
@@ -56,6 +61,8 @@ export function BuildProvider({ children }: { children: ReactNode }) {
                 currentBuildId,
                 setCurrentBuildId,
                 isDirty,
+                isShared,
+                setIsShared,
                 resetBuild,
                 loadSnapshot
             }}

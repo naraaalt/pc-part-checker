@@ -88,6 +88,18 @@ export function checkCompatibility(
 
             });
 
+        } else if (build.psu.wattage >= required + 50) {
+            
+            diagnostics.push({
+                
+                name: "Power",
+                
+                status: "warning",
+                
+                message: "PSU headroom is tight."
+                
+            });
+
         } else {
 
             diagnostics.push({

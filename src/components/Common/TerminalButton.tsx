@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import "./terminalButton.css";
 
@@ -10,8 +9,6 @@ type Props = {
     onClick?: () => void;
 
     className?: string;
-
-    navigateTo?: string;
 
     loadingText?: string;
 
@@ -25,13 +22,9 @@ export default function TerminalButton({
 
     className = "",
 
-    navigateTo,
-
     loadingText = "exiting builder...",
 
 }: Props) {
-
-    const navigate = useNavigate();
 
     const [typing, setTyping] = useState(false);
 
@@ -57,15 +50,7 @@ export default function TerminalButton({
 
                 setTimeout(() => {
 
-                    if (navigateTo) {
-
-                        navigate(navigateTo);
-
-                    } else {
-
-                        onClick?.();
-
-                    }
+                    onClick?.();
                     
                     setTyping(false);
 
@@ -83,7 +68,7 @@ export default function TerminalButton({
 
         if (typing) return;
 
-        if (navigateTo || loadingText) {
+        if (loadingText) {
 
             setTyping(true);
 

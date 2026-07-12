@@ -1,22 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Hero from "../components/Hero";
 import LetterGlitch from "../components/LetterGlitch";
 import BootSequence from "../components/BootSequence";
 import TerminalMenu from "../components/TerminalMenu";
 import FeatureCard from "../components/FeatureCard";
-import StatusBar from "../components/StatusBar";
-import FooterBar from "../components/FooterBar";
+
+import { getBuilds } from "../utils/buildStorage";
+import { cpus } from "../data/cpu";
+import { gpus } from "../data/gpu";
+import { motherboards } from "../data/motherboards";
 
 export default function Home() {
 
     const [ready, setReady] = useState(false);
+    const [savedBuildsCount, setSavedBuildsCount] = useState(0);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setSavedBuildsCount(getBuilds().length);
+    }, []);
+
+    useEffect(() => {
+        document.title = "PC Part Compatibility Checker";
+    }, []);
 
     return (
 
         <main className="home">
 
-        <title>PC Part Compatibility Checker</title>
+
 
         <LetterGlitch
             glitchColors={["#bababa", "#6b6b6b", "#383838"]}
@@ -26,7 +40,7 @@ export default function Home() {
             outerVignette={true}
         />
 
-            <StatusBar />
+
 
             <div className="overlay">
 
@@ -46,35 +60,36 @@ export default function Home() {
                         <section className="cards">
 
                             <FeatureCard
+                                title="My Builds"
+                                onClick={() => navigate("/builds")}
+                                lines={[
+                                    "Saved Configurations",
+                                    "",
+                                    `TOTAL : ${savedBuildsCount}`,
+                                    "",
+                                    "STATUS : SYNCED"
+                                ]}
+                            />
+
+                            <FeatureCard
                                 title="Compatibility"
                                 lines={[
                                     "✓ CPU Socket",
                                     "✓ RAM Type",
                                     "✓ PCIe Check",
                                     "",
-                                    "STATUS : READY"
-                                ]}
-                            />
-
-                            <FeatureCard
-                                title="Power"
-                                lines={[
-                                    "CPU : -- W",
-                                    "GPU : -- W",
-                                    "TOTAL : -- W",
-                                    "",
-                                    "PSU : UNKNOWN"
+                                    "STATUS : ACTIVE"
                                 ]}
                             />
 
                             <FeatureCard
                                 title="Database"
                                 lines={[
-                                    "CPU : ---",
-                                    "GPU : ---",
-                                    "BOARD : ---",
+                                    `CPU : ${cpus.length} indexed`,
+                                    `GPU : ${gpus.length} indexed`,
+                                    `BOARD : ${motherboards.length} indexed`,
                                     "",
-                                    "ONLINE"
+                                    "STATUS : ONLINE"
                                 ]}
                             />
 
@@ -85,7 +100,7 @@ export default function Home() {
 
             </div>
 
-            <FooterBar />
+
 
         </main>
 

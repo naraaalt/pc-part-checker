@@ -4,6 +4,8 @@ type Props = {
 
     lines: string[];
 
+    onClick?: () => void;
+
 };
 
 export default function FeatureCard({
@@ -12,11 +14,13 @@ export default function FeatureCard({
 
     lines,
 
+    onClick,
+
 }: Props) {
 
     return (
 
-        <div className="feature-card">
+        <div className="feature-card" onClick={onClick}>
 
             <div className="card-header">
 

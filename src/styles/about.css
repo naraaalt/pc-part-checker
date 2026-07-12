@@ -1,12 +1,14 @@
 .about-page {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0c0c0c;
+    background-color: var(--bg);
     color: #e0e0e0;
     font-family: monospace;
+    overflow: auto;
+    padding: calc(var(--bar-top) + 20px) 20px calc(var(--bar-bottom) + 20px);
 }
 
 .about-window {
@@ -21,7 +23,7 @@
 
 .about-bar {
     height: 30px;
-    background-color: #1a1a1a;
+    background-color: var(--bg-elevated);
     border-bottom: 1px solid #333;
     display: flex;
     align-items: center;
@@ -29,9 +31,28 @@
     gap: 6px;
 }
 
+.about-bar .dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #333;
+}
+
+.about-bar .dot:nth-child(1) {
+    background: var(--fail);
+}
+
+.about-bar .dot:nth-child(2) {
+    background: var(--warning);
+}
+
+.about-bar .dot:nth-child(3) {
+    background: var(--accent);
+}
+
 .about-bar-title {
     margin-left: 10px;
-    color: #888;
+    color: var(--fg-muted);
     font-size: 0.8rem;
 }
 
@@ -54,7 +75,7 @@
 
 .about-section h2 {
     font-size: 1rem;
-    color: #888;
+    color: var(--fg-muted);
     margin: 0 0 1rem 0;
     font-weight: normal;
 }
@@ -83,7 +104,7 @@
 }
 
 .about-list span {
-    color: #888;
+    color: var(--fg-muted);
     min-width: 100px;
 }
 
@@ -94,7 +115,7 @@
 }
 
 .tech-grid span {
-    background-color: #1a1a1a;
+    background-color: var(--bg-elevated);
     border: 1px solid #333;
     padding: 0.3rem 0.8rem;
     font-size: 0.85rem;

@@ -28,8 +28,8 @@ export default function SearchableSelect<
 }: Props<T>) {
 
     const [open, setOpen] = useState(false);
-
     const [search, setSearch] = useState("");
+    const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
     const filtered = options.filter(option =>
         option.name
@@ -38,14 +38,35 @@ export default function SearchableSelect<
     );
 
     function handleSelect(option: T) {
-
         onChange(option);
-
         setSearch("");
-
         setOpen(false);
-
+        setHighlightedIndex(-1);
     }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (!open) {
+            if (e.key === "Enter" || e.key === "ArrowDown" || e.key === " ") {
+                if (!disabled) setOpen(true);
+            }
+            return;
+        }
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            setHighlightedIndex(prev => Math.min(prev + 1, filtered.length - 1));
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            setHighlightedIndex(prev => Math.max(prev - 1, 0));
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (highlightedIndex >= 0 && highlightedIndex < filtered.length) {
+                handleSelect(filtered[highlightedIndex]);
+            }
+        } else if (e.key === "Escape") {
+            setOpen(false);
+        }
+    };
 
     return (
 
@@ -65,27 +86,21 @@ export default function SearchableSelect<
                         : value?.name ?? ""
                 }
                 onFocus={() => {
-
                     if (disabled) return;
-
                     setOpen(true);
-
                     setSearch("");
-
+                    setHighlightedIndex(-1);
                 }}
                 onChange={(e) => {
-
                     setSearch(e.target.value);
-
+                    setHighlightedIndex(-1);
                 }}
+                onKeyDown={handleKeyDown}
                 onBlur={() => {
-
                     setTimeout(() => {
-
                         setOpen(false);
-
+                        setHighlightedIndex(-1);
                     }, 150);
-
                 }}
             />
 
@@ -95,12 +110,13 @@ export default function SearchableSelect<
 
                     {filtered.length > 0 ? (
 
-                        filtered.map(option => (
+                        filtered.map((option, index) => (
 
                             <div
                                 key={option.id}
-                                className="dropdown-item"
+                                className={`dropdown-item ${index === highlightedIndex ? "highlighted" : ""}`}
                                 onMouseDown={() => handleSelect(option)}
+                                onMouseEnter={() => setHighlightedIndex(index)}
                             >
 
                                 {option.name}

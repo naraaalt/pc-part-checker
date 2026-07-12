@@ -132,6 +132,21 @@ export const motherboards: Motherboard[] = [
         sataPorts: 4,
         wifi: true,
         price: 649
+    },
+    {
+        id: 7,
+        brand: "Gigabyte",
+        name: "X670E AORUS MASTER",
+        socket: "AM5",
+        chipset: "X670E",
+        formFactor: "ATX",
+        ramType: "DDR5",
+        ramSlots: 4,
+        maxMemory: 192,
+        pcie: "5.0",
+        m2Slots: 4,
+        sataPorts: 6,
+        wifi: true,
+        price: 499
     }
-
 ];

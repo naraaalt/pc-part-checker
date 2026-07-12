@@ -136,6 +136,31 @@ export const cpus: CPU[] = [
         tdp: 125,
         integratedGraphics: true,
         price: 399
+    },
+    {
+        id: 9,
+        brand: "AMD",
+        name: "Ryzen 9 7950X3D",
+        socket: "AM5",
+        cores: 16,
+        threads: 32,
+        baseClock: 4.2,
+        boostClock: 5.7,
+        tdp: 120,
+        integratedGraphics: true,
+        price: 599
+    },
+    {
+        id: 10,
+        brand: "Intel",
+        name: "Core i9-14900K",
+        socket: "LGA1700",
+        cores: 24,
+        threads: 32,
+        baseClock: 3.2,
+        boostClock: 6.0,
+        tdp: 253,
+        integratedGraphics: true,
+        price: 549
     }
-
 ];
