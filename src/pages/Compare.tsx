@@ -4,6 +4,7 @@ import type { BuildSave } from "../types/BuildSave";
 import BuilderHeader from "../components/Builder/BuilderHeader";
 import { calculatePrice } from "../utils/calculatePrice";
 import { calculatePower } from "../utils/calculatePower";
+import SearchableSelect from "../components/Builder/SearchableSelect";
 import "../styles/compare.css";
 
 export default function Compare() {
@@ -50,27 +51,21 @@ export default function Compare() {
                         <div className="compare-selectors">
                             <div className="selector-group">
                                 <label>Build 1</label>
-                                <select 
-                                    className="compare-select" 
-                                    value={build1Id} 
-                                    onChange={(e) => setBuild1Id(e.target.value)}
-                                >
-                                    {builds.map(b => (
-                                        <option key={b.id} value={b.id}>{b.name}</option>
-                                    ))}
-                                </select>
+                                <SearchableSelect
+                                    placeholder="Search Build 1"
+                                    options={builds}
+                                    value={build1}
+                                    onChange={(b) => setBuild1Id(b.id)}
+                                />
                             </div>
                             <div className="selector-group">
                                 <label>Build 2</label>
-                                <select 
-                                    className="compare-select" 
-                                    value={build2Id} 
-                                    onChange={(e) => setBuild2Id(e.target.value)}
-                                >
-                                    {builds.map(b => (
-                                        <option key={b.id} value={b.id}>{b.name}</option>
-                                    ))}
-                                </select>
+                                <SearchableSelect
+                                    placeholder="Search Build 2"
+                                    options={builds}
+                                    value={build2}
+                                    onChange={(b) => setBuild2Id(b.id)}
+                                />
                             </div>
                         </div>
 

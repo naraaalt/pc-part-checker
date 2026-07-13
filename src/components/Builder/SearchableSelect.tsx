@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
-type Props<T extends { id: number; name: string }> = {
+type Props<T extends { id: number | string; name: string }> = {
 
     placeholder: string;
 
@@ -17,7 +17,7 @@ type Props<T extends { id: number; name: string }> = {
 };
 
 export default function SearchableSelect<
-    T extends { id: number; name: string }
+    T extends { id: number | string; name: string }
 >({
     placeholder,
     options,
@@ -30,12 +30,45 @@ export default function SearchableSelect<
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
+    const listRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [dropup, setDropup] = useState(false);
 
     const filtered = options.filter(option =>
         option.name
             .toLowerCase()
             .includes(search.toLowerCase())
     );
+
+    useEffect(() => {
+        if (open && highlightedIndex >= 0 && listRef.current) {
+            const container = listRef.current;
+            const highlightedItem = container.children[highlightedIndex] as HTMLElement;
+            if (highlightedItem) {
+                const containerTop = container.scrollTop;
+                const containerBottom = containerTop + container.clientHeight;
+                const itemTop = highlightedItem.offsetTop;
+                const itemBottom = itemTop + highlightedItem.clientHeight;
+
+                if (itemTop < containerTop) {
+                    container.scrollTop = itemTop;
+                } else if (itemBottom > containerBottom) {
+                    container.scrollTop = itemBottom - container.clientHeight;
+                }
+            }
+        }
+    }, [highlightedIndex, open]);
+
+    useEffect(() => {
+        if (open && containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            if (window.innerHeight - rect.bottom < 300) {
+                setDropup(true);
+            } else {
+                setDropup(false);
+            }
+        }
+    }, [open]);
 
     function handleSelect(option: T) {
         onChange(option);
@@ -70,7 +103,7 @@ export default function SearchableSelect<
 
     return (
 
-        <div className={`search-select ${disabled ? "disabled" : ""}`}>
+        <div className={`search-select ${disabled ? "disabled" : ""}`} ref={containerRef}>
 
             <input
                 disabled={disabled}
@@ -106,7 +139,7 @@ export default function SearchableSelect<
 
             {open && (
 
-                <div className="dropdown">
+                <div className={`dropdown ${dropup ? "dropup" : ""}`} ref={listRef}>
 
                     {filtered.length > 0 ? (
 

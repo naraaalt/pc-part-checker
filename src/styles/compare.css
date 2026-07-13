@@ -52,6 +52,8 @@
     margin-bottom: 30px;
     opacity: 0;
     animation: slideUpFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    position: relative;
+    z-index: 10;
 }
 
 .selector-group {
@@ -68,23 +70,7 @@
     text-transform: uppercase;
 }
 
-.compare-select {
-    width: 100%;
-    padding: 12px 16px;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-strong);
-    color: var(--fg-secondary);
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-}
 
-.compare-select:focus {
-    border-color: var(--accent);
-    outline: none;
-    box-shadow: 0 0 12px rgba(var(--accent-glow), 0.25);
-}
 
 .compare-table-wrapper {
     background: var(--bg-recessed);
