@@ -124,5 +124,135 @@ export const gpus: GPU[] = [
         power: 355,
         pcie: "4.0",
         price: 999
+    },
+
+    {
+        id: 9,
+        brand: "NVIDIA",
+        name: "RTX 4060 Ti",
+        chipset: "AD106",
+        memory: 16,
+        memoryType: "GDDR6",
+        length: 250,
+        power: 165,
+        pcie: "4.0",
+        price: 499
+    },
+
+    {
+        id: 10,
+        brand: "NVIDIA",
+        name: "RTX 4070 Ti SUPER",
+        chipset: "AD103",
+        memory: 16,
+        memoryType: "GDDR6X",
+        length: 310,
+        power: 285,
+        pcie: "4.0",
+        price: 799
+    },
+
+    {
+        id: 11,
+        brand: "NVIDIA",
+        name: "RTX 5090",
+        chipset: "Blackwell",
+        memory: 32,
+        memoryType: "GDDR7",
+        length: 340,
+        power: 575,
+        pcie: "5.0",
+        price: 1999
+    },
+
+    {
+        id: 12,
+        brand: "NVIDIA",
+        name: "RTX 3050",
+        chipset: "GA106",
+        memory: 8,
+        memoryType: "GDDR6",
+        length: 242,
+        power: 130,
+        pcie: "4.0",
+        price: 249
+    },
+
+    {
+        id: 13,
+        brand: "AMD",
+        name: "RX 7600",
+        chipset: "Navi 33",
+        memory: 8,
+        memoryType: "GDDR6",
+        length: 270,
+        power: 165,
+        pcie: "4.0",
+        price: 269
+    },
+
+    {
+        id: 14,
+        brand: "AMD",
+        name: "RX 7900 GRE",
+        chipset: "Navi 31",
+        memory: 16,
+        memoryType: "GDDR6",
+        length: 280,
+        power: 260,
+        pcie: "4.0",
+        price: 549
+    },
+
+    {
+        id: 15,
+        brand: "AMD",
+        name: "RX 9070 XT",
+        chipset: "Navi 48",
+        memory: 16,
+        memoryType: "GDDR6",
+        length: 300,
+        power: 304,
+        pcie: "5.0",
+        price: 599
+    },
+
+    {
+        id: 16,
+        brand: "Intel",
+        name: "Arc A770",
+        chipset: "Alchemist",
+        memory: 16,
+        memoryType: "GDDR6",
+        length: 295,
+        power: 225,
+        pcie: "4.0",
+        price: 349
+    },
+
+    {
+        id: 17,
+        brand: "Intel",
+        name: "Arc B580",
+        chipset: "Battlemage",
+        memory: 12,
+        memoryType: "GDDR6",
+        length: 272,
+        power: 190,
+        pcie: "4.0",
+        price: 249
+    },
+
+    {
+        id: 18,
+        brand: "NVIDIA",
+        name: "RTX 4080 SUPER",
+        chipset: "AD103",
+        memory: 16,
+        memoryType: "GDDR6X",
+        length: 310,
+        power: 320,
+        pcie: "4.0",
+        price: 999
     }
 ];
