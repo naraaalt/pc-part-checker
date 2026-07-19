@@ -1,5 +1,6 @@
 import type { Build } from "../types/Build";
 import type { CompatibilityResult, Diagnostic,} from "../types/Compatibility";
+import { calculatePower } from "./calculatePower";
 
 export function checkCompatibility(
     build: Build
@@ -45,7 +46,7 @@ export function checkCompatibility(
 
             diagnostics.push({
 
-                name: "Memory",
+                name: "Memory Type",
 
                 status: "pass",
 
@@ -57,7 +58,7 @@ export function checkCompatibility(
 
             diagnostics.push({
 
-                name: "Memory",
+                name: "Memory Type",
 
                 status: "fail",
 
@@ -67,16 +68,29 @@ export function checkCompatibility(
 
         }
 
+        // Fix #4 — RAM capacity vs motherboard maxMemory
+        if (build.ram.capacity > build.motherboard.maxMemory) {
+
+            diagnostics.push({
+
+                name: "Memory Capacity",
+
+                status: "fail",
+
+                message: `RAM capacity (${build.ram.capacity} GB) exceeds motherboard maximum (${build.motherboard.maxMemory} GB).`
+
+            });
+
+        }
+
     }
 
-    // PSU
+    // PSU — Fix #3: use shared calculatePower so verdict matches displayed wattage
     if (build.psu) {
 
-        const required =
-            (build.cpu?.tdp ?? 0) +
-            (build.gpu?.power ?? 0);
+        const required = calculatePower(build);
 
-        if (build.psu.wattage >= required + 150) {
+        if (build.psu.wattage >= required + 100) {
 
             diagnostics.push({
 
@@ -88,7 +102,7 @@ export function checkCompatibility(
 
             });
 
-        } else if (build.psu.wattage >= required + 50) {
+        } else if (build.psu.wattage >= required) {
             
             diagnostics.push({
                 

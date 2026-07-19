@@ -3,6 +3,7 @@ import { useState } from "react";
 import { calculatePrice } from "../../utils/calculatePrice";
 import { calculatePower } from "../../utils/calculatePower";
 import { checkCompatibility } from "../../utils/checkCompatibility";
+import { formatPrice } from "../../utils/formatPrice";
 import TerminalInput from "../Common/TerminalInput";
 import BuildActions from "./BuildActions";
 export default function SummaryPanel() {
@@ -55,13 +56,13 @@ export default function SummaryPanel() {
                                 maxLength={30}
                                 onChange={(value) =>
 
-                                    setBuild({
+                                    setBuild(prev => ({
 
-                                        ...build,
+                                        ...prev,
 
                                         buildName: value,
 
-                                    })
+                                    }))
 
                                 }
                             />
@@ -96,7 +97,7 @@ export default function SummaryPanel() {
 
                         ["TDP", `${build.cpu.tdp} W`],
 
-                        ["Price", `$${build.cpu.price}`],
+                        ["Price", formatPrice(build.cpu.price)],
 
                     ]
 
@@ -124,7 +125,7 @@ export default function SummaryPanel() {
                         ["M.2 Slots", build.motherboard.m2Slots],
                         ["SATA Ports", build.motherboard.sataPorts],
                         ["WiFi", build.motherboard.wifi ? "Yes" : "No"],
-                        ["Price", `$${build.motherboard.price}`],
+                        ["Price", formatPrice(build.motherboard.price)],
                     ]
                 }
             />
@@ -144,7 +145,7 @@ export default function SummaryPanel() {
                         ["Memory Type", build.gpu.memoryType],
                         ["TDP", `${build.gpu.power} W`],
                         ["PCIe", build.gpu.pcie],
-                        ["Price", `$${build.gpu.price}`],
+                        ["Price", formatPrice(build.gpu.price)],
                     ]
                 }
             
@@ -164,7 +165,7 @@ export default function SummaryPanel() {
                         ["Type", build.ram.type],
                         ["Capacity", `${build.ram.capacity} GB`],
                         ["Speed", `${build.ram.speed} MHz`],
-                        ["Price", `$${build.ram.price}`],
+                        ["Price", formatPrice(build.ram.price)],
                     ]
                 }
 
@@ -186,7 +187,7 @@ export default function SummaryPanel() {
                         ["Interface", build.storage.interface],
                         ["Read Speed", `${build.storage.readSpeed} MB/s`],
                         ["Write Speed", `${build.storage.writeSpeed} MB/s`],
-                        ["Price", `$${build.storage.price}`],
+                        ["Price", formatPrice(build.storage.price)],
                     ]
                 }
 
@@ -204,8 +205,8 @@ export default function SummaryPanel() {
                         ["Brand", build.psu.brand],
                         ["Wattage", `${build.psu.wattage} W`],
                         ["Efficiency", build.psu.efficiency],
-                        ["Modular", build.psu.modular ? "Yes" : "No"],
-                        ["Price", `$${build.psu.price}`],
+                        ["Modular", build.psu.modular],
+                        ["Price", formatPrice(build.psu.price)],
                     ]
                 }
 
@@ -244,7 +245,7 @@ export default function SummaryPanel() {
 
             <BuildItem
                 label="Price"
-                value={`$${totalPrice}`}
+                value={formatPrice(totalPrice)}
             />
 
             <BuildItem

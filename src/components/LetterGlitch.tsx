@@ -45,13 +45,22 @@ const LetterGlitch = ({
     return glitchColors[Math.floor(Math.random() * glitchColors.length)];
   };
 
-  const hexToRgb = (hex: string) => {
+  const toRgb = (c: string) => {
+    // Handle rgb(...) strings produced by interpolateColor
+    if (c.startsWith("rgb")) {
+      const parts = c.match(/\d+/g);
+      if (parts && parts.length >= 3) {
+        return { r: Number(parts[0]), g: Number(parts[1]), b: Number(parts[2]) };
+      }
+      return null;
+    }
+    // Handle hex strings
     const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, (_m, r, g, b) => {
+    const expanded = c.replace(shorthandRegex, (_m, r, g, b) => {
       return r + r + g + g + b + b;
     });
 
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(expanded);
     return result
       ? {
           r: parseInt(result[1], 16),
@@ -159,8 +168,8 @@ const LetterGlitch = ({
         letter.colorProgress += 0.05;
         if (letter.colorProgress > 1) letter.colorProgress = 1;
 
-        const startRgb = hexToRgb(letter.color);
-        const endRgb = hexToRgb(letter.targetColor);
+        const startRgb = toRgb(letter.color);
+        const endRgb = toRgb(letter.targetColor);
         if (startRgb && endRgb) {
           letter.color = interpolateColor(startRgb, endRgb, letter.colorProgress);
           needsRedraw = true;

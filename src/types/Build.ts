@@ -24,3 +24,9 @@ export interface Build {
     psu?: PSU;
 
 }
+
+/** Canonical list of the six part-slot keys on a Build. */
+export const PART_KEYS = ["cpu", "motherboard", "gpu", "ram", "storage", "psu"] as const;
+
+/** Union type of part-slot key names. */
+export type PartKey = typeof PART_KEYS[number];

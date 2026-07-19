@@ -34,6 +34,25 @@ export function encodeBuild(build: Build): string {
         .replace(/=+$/, '');
 }
 
+/**
+ * Resolve a part by id from the given catalog array.
+ * If the id is present but can't be found, its string is pushed to `missing`.
+ */
+function resolve<T extends { id: number }>(
+    catalog: T[],
+    id: number | undefined,
+    label: string,
+    missing: string[]
+): T | undefined {
+    // Fix #5 — use strict undefined check instead of truthiness (handles id 0)
+    if (id === undefined) return undefined;
+    const found = catalog.find(p => p.id === id);
+    if (!found) {
+        missing.push(`${label} (id ${id})`);
+    }
+    return found;
+}
+
 export function decodeBuild(hash: string): Build | null {
     try {
         // Restore standard base64 from URL-safe variant
@@ -44,16 +63,25 @@ export function decodeBuild(hash: string): Build | null {
         const json = decodeURIComponent(atob(b64));
         const compact: CompactBuild = JSON.parse(json);
 
+        const missing: string[] = [];
+
         const build: Build = {
             buildName: compact.n || "Shared Build",
         };
 
-        if (compact.c) build.cpu = cpus.find(p => p.id === compact.c);
-        if (compact.m) build.motherboard = motherboards.find(p => p.id === compact.m);
-        if (compact.g) build.gpu = gpus.find(p => p.id === compact.g);
-        if (compact.r) build.ram = rams.find(p => p.id === compact.r);
-        if (compact.s) build.storage = storages.find(p => p.id === compact.s);
-        if (compact.p) build.psu = psus.find(p => p.id === compact.p);
+        build.cpu = resolve(cpus, compact.c, "CPU", missing);
+        build.motherboard = resolve(motherboards, compact.m, "Motherboard", missing);
+        build.gpu = resolve(gpus, compact.g, "GPU", missing);
+        build.ram = resolve(rams, compact.r, "RAM", missing);
+        build.storage = resolve(storages, compact.s, "Storage", missing);
+        build.psu = resolve(psus, compact.p, "PSU", missing);
+
+        if (missing.length > 0) {
+            console.warn(
+                "Some parts in the shared build could not be found in the current dataset:",
+                missing.join(", ")
+            );
+        }
 
         return build;
     } catch (e) {
@@ -61,4 +89,3 @@ export function decodeBuild(hash: string): Build | null {
         return null;
     }
 }
-

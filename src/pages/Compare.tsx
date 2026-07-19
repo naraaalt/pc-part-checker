@@ -4,6 +4,7 @@ import type { BuildSave } from "../types/BuildSave";
 import BuilderHeader from "../components/Builder/BuilderHeader";
 import { calculatePrice } from "../utils/calculatePrice";
 import { calculatePower } from "../utils/calculatePower";
+import { formatPrice } from "../utils/formatPrice";
 import SearchableSelect from "../components/Builder/SearchableSelect";
 import "../styles/compare.css";
 
@@ -124,13 +125,13 @@ export default function Compare() {
                                         </tr>
                                         <tr className="highlight-row">
                                             <td>Total Price</td>
-                                            <td>${calculatePrice(build1.build).toFixed(2)}</td>
+                                            <td>{formatPrice(calculatePrice(build1.build))}</td>
                                             <td>
-                                                ${calculatePrice(build2.build).toFixed(2)} 
+                                                {formatPrice(calculatePrice(build2.build))} 
                                                 <span className="delta">
                                                     {" "}
                                                     ({calculatePrice(build2.build) >= calculatePrice(build1.build) ? "+" : ""}
-                                                    ${(calculatePrice(build2.build) - calculatePrice(build1.build)).toFixed(2)})
+                                                    {formatPrice(calculatePrice(build2.build) - calculatePrice(build1.build))})
                                                 </span>
                                             </td>
                                         </tr>

@@ -61,6 +61,10 @@ export default function Builder() {
             return;
         }
         const saved = saveBuild(build);
+        if (!saved) {
+            setModalWarning("Failed to save — storage may be full.");
+            return;
+        }
         if (!build.id) {
             setBuild(prev => ({ ...prev, id: saved.id }));
             setCurrentBuildId(saved.id);

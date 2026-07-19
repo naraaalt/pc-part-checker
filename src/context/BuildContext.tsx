@@ -1,6 +1,7 @@
 import {
     createContext,
     useContext,
+    useMemo,
     useState,
     type ReactNode,
 } from "react";
@@ -35,7 +36,10 @@ export function BuildProvider({ children }: { children: ReactNode }) {
     const [currentBuildId, setCurrentBuildId] = useState<string | null>(null);
     const [isShared, setIsShared] = useState<boolean>(false);
 
-    const isDirty = !isShared && JSON.stringify(build) !== JSON.stringify(savedSnapshot || defaultBuild);
+    const isDirty = useMemo(
+        () => !isShared && JSON.stringify(build) !== JSON.stringify(savedSnapshot || defaultBuild),
+        [build, isShared, savedSnapshot]
+    );
 
     function resetBuild() {
         setBuild({ ...defaultBuild });

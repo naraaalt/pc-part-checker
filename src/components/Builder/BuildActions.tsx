@@ -80,6 +80,12 @@ export default function BuildActions() {
 
         const saved = saveBuild(build);
         
+        if (!saved) {
+            setStatus("Failed to save — storage may be full.");
+            setTimeout(() => setStatus(""), 2500);
+            return;
+        }
+
         if (!build.id) {
             setBuild(prev => ({ ...prev, id: saved.id }));
             setCurrentBuildId(saved.id);
@@ -176,6 +182,12 @@ export default function BuildActions() {
         const buildCopy = { ...build, id: undefined, buildName: build.buildName + " (Shared)" };
         const saved = saveBuild(buildCopy);
         
+        if (!saved) {
+            setStatus("Failed to save — storage may be full.");
+            setTimeout(() => setStatus(""), 2500);
+            return;
+        }
+
         setBuild(prev => ({ ...prev, id: saved.id, buildName: saved.name }));
         setCurrentBuildId(saved.id);
         setSavedSnapshot(saved.build);
@@ -195,10 +207,18 @@ export default function BuildActions() {
         import("../../utils/shareUrl").then(({ encodeBuild }) => {
             const hash = encodeBuild(build);
             const url = `${window.location.origin}/builder?build=${encodeURIComponent(hash)}`;
-            navigator.clipboard.writeText(url).then(() => {
-                setStatus("Share link copied!");
-                setTimeout(() => setStatus(""), 2500);
-            });
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    setStatus("Share link copied!");
+                    setTimeout(() => setStatus(""), 2500);
+                })
+                .catch(() => {
+                    setStatus("Copy failed — copy the link manually.");
+                    setTimeout(() => setStatus(""), 4000);
+                });
+        }).catch(() => {
+            setStatus("Failed to generate share link.");
+            setTimeout(() => setStatus(""), 2500);
         });
     }
 
