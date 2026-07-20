@@ -40,7 +40,9 @@ export function calculatePower(build: Build): number {
         total += build.caseFan.count * 2;
 
     // USB, VRM and general motherboard overhead (lowered from 50W to 30W now that cooler and fans are explicit)
-    total += 30;
+    if (total > 0) {
+        total += 30;
+    }
 
     return total;
 
