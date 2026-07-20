@@ -72,7 +72,7 @@ export default function BuildActions() {
             return;
         }
 
-        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu) {
+        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu && !build.cooler && !build.pcCase && !build.caseFan && !build.storage2) {
             setStatus("Please pick a part first.");
             setTimeout(() => setStatus(""), 2500);
             return;
@@ -122,7 +122,7 @@ export default function BuildActions() {
             return;
         }
 
-        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu) {
+        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu && !build.cooler && !build.pcCase && !build.caseFan && !build.storage2) {
 
             setStatus("Please pick a part first.");
 
@@ -173,7 +173,7 @@ export default function BuildActions() {
     }
 
     function handleSaveToMyBuilds() {
-        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu) {
+        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu && !build.cooler && !build.pcCase && !build.caseFan && !build.storage2) {
             setStatus("Please pick a part first.");
             setTimeout(() => setStatus(""), 2500);
             return;
@@ -198,7 +198,7 @@ export default function BuildActions() {
     }
 
     function handleShare() {
-        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu) {
+        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu && !build.cooler && !build.pcCase && !build.caseFan && !build.storage2) {
             setStatus("Please pick a part first.");
             setTimeout(() => setStatus(""), 2500);
             return;

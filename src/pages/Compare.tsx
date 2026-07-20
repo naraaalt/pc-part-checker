@@ -92,9 +92,9 @@ export default function Compare() {
                                             <td>{build2.build.motherboard?.name || "--"}</td>
                                         </tr>
                                         <tr>
-                                            <td>Memory</td>
-                                            <td>{build1.build.ram?.name || "--"}</td>
-                                            <td>{build2.build.ram?.name || "--"}</td>
+                                            <td>CPU Cooler</td>
+                                            <td>{build1.build.cooler?.name || "--"}</td>
+                                            <td>{build2.build.cooler?.name || "--"}</td>
                                         </tr>
                                         <tr>
                                             <td>GPU</td>
@@ -102,9 +102,29 @@ export default function Compare() {
                                             <td>{build2.build.gpu?.name || "--"}</td>
                                         </tr>
                                         <tr>
+                                            <td>Memory</td>
+                                            <td>{build1.build.ram?.name || "--"}</td>
+                                            <td>{build2.build.ram?.name || "--"}</td>
+                                        </tr>
+                                        <tr>
                                             <td>Storage</td>
                                             <td>{build1.build.storage?.name || "--"}</td>
                                             <td>{build2.build.storage?.name || "--"}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Secondary Storage</td>
+                                            <td>{build1.build.storage2?.name || "--"}</td>
+                                            <td>{build2.build.storage2?.name || "--"}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>PC Case</td>
+                                            <td>{build1.build.pcCase?.name || "--"}</td>
+                                            <td>{build2.build.pcCase?.name || "--"}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Case Fans</td>
+                                            <td>{build1.build.caseFan ? `${build1.build.caseFan.count} × ${build1.build.caseFan.name}` : "--"}</td>
+                                            <td>{build2.build.caseFan ? `${build2.build.caseFan.count} × ${build2.build.caseFan.name}` : "--"}</td>
                                         </tr>
                                         <tr>
                                             <td>Power Supply</td>

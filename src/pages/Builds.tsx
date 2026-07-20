@@ -109,7 +109,7 @@ export default function Builds() {
                 } else {
                     alert("Invalid build JSON file.");
                 }
-            } catch (err) {
+            } catch {
                 alert("Failed to parse JSON.");
             }
         };
@@ -187,9 +187,11 @@ export default function Builds() {
                                             <span className="boldspan">Selected Parts</span>
                                             <span>{[
                                                 buildSave.build.cpu, buildSave.build.motherboard, 
-                                                buildSave.build.gpu, buildSave.build.ram, 
-                                                buildSave.build.storage, buildSave.build.psu
-                                            ].filter(Boolean).length} / 6</span>
+                                                buildSave.build.cooler, buildSave.build.gpu, buildSave.build.ram, 
+                                                buildSave.build.storage, buildSave.build.storage2,
+                                                buildSave.build.pcCase, buildSave.build.caseFan,
+                                                buildSave.build.psu
+                                            ].filter(Boolean).length} / 10</span>
                                         </div>
                                         <div 
                                             className="spec-toggle" 
@@ -208,6 +210,10 @@ export default function Builds() {
                                                     <span>{buildSave.build.motherboard?.name ?? "--"}</span>
                                                 </div>
                                                 <div className="spec-row">
+                                                    <span>CPU Cooler</span>
+                                                    <span>{buildSave.build.cooler?.name ?? "--"}</span>
+                                                </div>
+                                                <div className="spec-row">
                                                     <span>GPU</span>
                                                     <span>{buildSave.build.gpu?.name ?? "--"}</span>
                                                 </div>
@@ -218,6 +224,18 @@ export default function Builds() {
                                                 <div className="spec-row">
                                                     <span>Storage</span>
                                                     <span>{buildSave.build.storage?.name ?? "--"}</span>
+                                                </div>
+                                                <div className="spec-row">
+                                                    <span>Secondary Storage</span>
+                                                    <span>{buildSave.build.storage2?.name ?? "--"}</span>
+                                                </div>
+                                                <div className="spec-row">
+                                                    <span>PC Case</span>
+                                                    <span>{buildSave.build.pcCase?.name ?? "--"}</span>
+                                                </div>
+                                                <div className="spec-row">
+                                                    <span>Case Fans</span>
+                                                    <span>{buildSave.build.caseFan ? `${buildSave.build.caseFan.count} × ${buildSave.build.caseFan.name}` : "--"}</span>
                                                 </div>
                                                 <div className="spec-row">
                                                     <span>Power Supply</span>

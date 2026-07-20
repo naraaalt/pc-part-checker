@@ -5,6 +5,10 @@ import { motherboards } from "../data/motherboards";
 import { rams } from "../data/ram";
 import { storages } from "../data/storage";
 import { psus } from "../data/psu";
+import { cpuCoolers } from "../data/cpuCooler";
+import { pcCases } from "../data/pcCase";
+import { caseFans } from "../data/caseFan";
+import { secondaryStorages } from "../data/secondaryStorage";
 
 interface CompactBuild {
     n: string; // name
@@ -14,6 +18,11 @@ interface CompactBuild {
     r?: number; // ram id
     s?: number; // storage id
     p?: number; // psu id
+    k?: number; // cooler id
+    a?: number; // case id
+    f?: number; // fan id
+    fc?: number; // fan count
+    t?: number; // storage2 id
 }
 
 export function encodeBuild(build: Build): string {
@@ -26,6 +35,13 @@ export function encodeBuild(build: Build): string {
     if (build.ram) compact.r = build.ram.id;
     if (build.storage) compact.s = build.storage.id;
     if (build.psu) compact.p = build.psu.id;
+    if (build.cooler) compact.k = build.cooler.id;
+    if (build.pcCase) compact.a = build.pcCase.id;
+    if (build.caseFan) {
+        compact.f = build.caseFan.id;
+        compact.fc = build.caseFan.count;
+    }
+    if (build.storage2) compact.t = build.storage2.id;
 
     const json = JSON.stringify(compact);
     return btoa(encodeURIComponent(json))
@@ -75,6 +91,20 @@ export function decodeBuild(hash: string): Build | null {
         build.ram = resolve(rams, compact.r, "RAM", missing);
         build.storage = resolve(storages, compact.s, "Storage", missing);
         build.psu = resolve(psus, compact.p, "PSU", missing);
+
+        const cooler = resolve(cpuCoolers, compact.k, "CPU Cooler", missing);
+        if (cooler) build.cooler = cooler;
+
+        const pcCase = resolve(pcCases, compact.a, "PC Case", missing);
+        if (pcCase) build.pcCase = pcCase;
+
+        const fan = resolve(caseFans, compact.f, "Case Fan", missing);
+        if (fan) {
+            build.caseFan = { ...fan, count: compact.fc ?? 1 };
+        }
+
+        const storage2 = resolve(secondaryStorages, compact.t, "Secondary Storage", missing);
+        if (storage2) build.storage2 = storage2;
 
         if (missing.length > 0) {
             console.warn(

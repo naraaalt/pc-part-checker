@@ -27,8 +27,20 @@ export function calculatePower(build: Build): number {
     if (build.storage)
         total += 6;
 
-    // Fans, USB, VRM overhead
-    total += 50;
+    // Secondary Storage: ~6 W per drive
+    if (build.storage2)
+        total += 6;
+
+    // CPU Cooler: ~5 W for pump/fans
+    if (build.cooler)
+        total += 5;
+
+    // Case Fans: ~2 W per fan
+    if (build.caseFan)
+        total += build.caseFan.count * 2;
+
+    // USB, VRM and general motherboard overhead (lowered from 50W to 30W now that cooler and fans are explicit)
+    total += 30;
 
     return total;
 

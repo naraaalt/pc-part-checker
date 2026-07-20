@@ -13,9 +13,13 @@ export default function SummaryPanel() {
     const selectedParts = [
         build.cpu,
         build.motherboard,
+        build.cooler,
         build.gpu,
         build.ram,
         build.storage,
+        build.storage2,
+        build.pcCase,
+        build.caseFan,
         build.psu,
     ].filter(Boolean).length;
 
@@ -130,6 +134,26 @@ export default function SummaryPanel() {
                 }
             />
 
+            <ExpandableBuildItem 
+                id="cooler"
+                label="CPU Cooler"
+                value={build.cooler?.name}
+                expanded={expanded === "cooler"}
+                onToggle={() => toggle("cooler")}
+                specs={
+                    build.cooler && [
+                        ["Brand", build.cooler.brand],
+                        ["Type", build.cooler.type],
+                        ["Sockets", build.cooler.sockets.join(", ")],
+                        ["TDP Rating", `${build.cooler.tdpRating} W`],
+                        ...(build.cooler.type === "Air" && build.cooler.height ? [["Height", `${build.cooler.height} mm`]] : []),
+                        ...(build.cooler.type === "AIO" && build.cooler.radiatorSize ? [["Radiator Size", `${build.cooler.radiatorSize} mm`]] : []),
+                        ["Fans", build.cooler.fans],
+                        ["Price", formatPrice(build.cooler.price)],
+                    ] as [string, string | number][]
+                }
+            />
+
             <ExpandableBuildItem
             
                 id="gpu"
@@ -194,6 +218,64 @@ export default function SummaryPanel() {
             />
 
             <ExpandableBuildItem 
+                id="storage2"
+                label="Secondary Storage"
+                value={build.storage2?.name}
+                expanded={expanded === "storage2"}
+                onToggle={() => toggle("storage2")}
+                specs={
+                    build.storage2 && [
+                        ["Brand", build.storage2.brand],
+                        ["Type", build.storage2.type],
+                        ["Capacity", `${build.storage2.capacity} GB`],
+                        ["Interface", build.storage2.interface],
+                        ["Read Speed", `${build.storage2.readSpeed} MB/s`],
+                        ["Write Speed", `${build.storage2.writeSpeed} MB/s`],
+                        ["Price", formatPrice(build.storage2.price)],
+                    ]
+                }
+            />
+
+            <ExpandableBuildItem 
+                id="pcCase"
+                label="PC Case"
+                value={build.pcCase?.name}
+                expanded={expanded === "pcCase"}
+                onToggle={() => toggle("pcCase")}
+                specs={
+                    build.pcCase && [
+                        ["Brand", build.pcCase.brand],
+                        ["Form Factors", build.pcCase.supportedFormFactors.join(", ")],
+                        ["Max GPU Length", `${build.pcCase.maxGpuLength} mm`],
+                        ["Max Cooler Height", `${build.pcCase.maxCoolerHeight} mm`],
+                        ["PSU Form Factors", build.pcCase.supportedPsuFormFactors.join(", ")],
+                        ["Max Case Fans", build.pcCase.maxCaseFans],
+                        ["Fan Sizes", build.pcCase.fanSizes.map(s => `${s}mm`).join(", ")],
+                        ["Price", formatPrice(build.pcCase.price)],
+                    ]
+                }
+            />
+
+            <ExpandableBuildItem 
+                id="caseFan"
+                label="Case Fans"
+                value={build.caseFan ? `${build.caseFan.count} × ${build.caseFan.name}` : undefined}
+                expanded={expanded === "caseFan"}
+                onToggle={() => toggle("caseFan")}
+                specs={
+                    build.caseFan && [
+                        ["Brand", build.caseFan.brand],
+                        ["Size", `${build.caseFan.size} mm`],
+                        ["Quantity", build.caseFan.count],
+                        ["RPM", `${build.caseFan.rpm} RPM`],
+                        ["Airflow", `${build.caseFan.airflow} CFM`],
+                        ["Noise", `${build.caseFan.noise} dBA`],
+                        ["Price", formatPrice(build.caseFan.price * build.caseFan.count)],
+                    ]
+                }
+            />
+
+            <ExpandableBuildItem 
             
                 id="psu"
                 label="Power Supply"
@@ -250,7 +332,7 @@ export default function SummaryPanel() {
 
             <BuildItem
                 label="Parts"
-                value={`${selectedParts} / 6`}
+                value={`${selectedParts} / 10`}
             />
 
             <hr />
