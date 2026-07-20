@@ -143,3 +143,42 @@
 .build-card:nth-child(4) { animation-delay: 0.4s; }
 .build-card:nth-child(5) { animation-delay: 0.5s; }
 .build-card:nth-child(n+6) { animation-delay: 0.6s; }
+
+.builds-sort-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+}
+
+.builds-sort-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--fg-secondary);
+}
+
+.builds-sort-select {
+    background: var(--bg-recessed);
+    border: 1px solid var(--border-subtle);
+    color: var(--fg-bright);
+    font-family: monospace;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.builds-sort-select:hover, .builds-sort-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(var(--accent-glow), 0.15);
+}
+
+.builds-sort-select option {
+    background: var(--bg-elevated);
+    color: var(--fg-bright);
+}
+

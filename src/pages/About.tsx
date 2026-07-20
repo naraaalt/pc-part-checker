@@ -16,7 +16,7 @@ export default function About() {
                 </div>
 
                 <div className="about-body">
-                    <h1 className="about-title">PC PART CHECKER v0.1.0</h1>
+                    <h1 className="about-title">PC PART CHECKER v1.0</h1>
 
                     <section className="about-section">
                         <h2>// PURPOSE</h2>

@@ -1,13 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { getBuilds, deleteBuild, saveBuild } from "../utils/buildStorage";
 import type { BuildSave } from "../types/BuildSave";
+import type { Build } from "../types/Build";
 
 import BuilderHeader from "../components/Builder/BuilderHeader";
 import TerminalButton from "../components/Common/TerminalButton";
 import ConfirmModal from "../components/Common/ConfirmModal";
 import { useBuild } from "../context/BuildContext";
+import { calculatePrice } from "../utils/calculatePrice";
+import { calculatePower } from "../utils/calculatePower";
 import "../styles/builds.css";
+
+type SortKey = "latest" | "oldest" | "name" | "priceHigh" | "priceLow" | "powerHigh" | "powerLow" | "complete";
 
 export default function Builds() {
     const navigate = useNavigate();
@@ -20,6 +25,38 @@ export default function Builds() {
     const [showModal, setShowModal] = useState(false);
     const [modalWarning, setModalWarning] = useState("");
     const [pendingOpenId, setPendingOpenId] = useState<string | null>(null);
+    const [sortBy, setSortBy] = useState<SortKey>("latest");
+
+    const getFilledCount = (buildObj: Build) => {
+        return [
+            buildObj.cpu, buildObj.motherboard, buildObj.cooler, buildObj.gpu, buildObj.ram,
+            buildObj.storage, buildObj.storage2, buildObj.pcCase, buildObj.caseFan, buildObj.psu
+        ].filter(Boolean).length;
+    };
+
+    const sortedBuilds = useMemo(() => {
+        const sorted = [...builds];
+        switch (sortBy) {
+            case "latest":
+                return sorted.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+            case "oldest":
+                return sorted.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+            case "name":
+                return sorted.sort((a, b) => a.name.localeCompare(b.name));
+            case "priceHigh":
+                return sorted.sort((a, b) => calculatePrice(b.build) - calculatePrice(a.build));
+            case "priceLow":
+                return sorted.sort((a, b) => calculatePrice(a.build) - calculatePrice(b.build));
+            case "powerHigh":
+                return sorted.sort((a, b) => calculatePower(b.build) - calculatePower(a.build));
+            case "powerLow":
+                return sorted.sort((a, b) => calculatePower(a.build) - calculatePower(b.build));
+            case "complete":
+                return sorted.sort((a, b) => getFilledCount(b.build) - getFilledCount(a.build));
+            default:
+                return sorted;
+        }
+    }, [builds, sortBy]);
 
     useEffect(() => {
         setBuilds(getBuilds());
@@ -131,16 +168,40 @@ export default function Builds() {
                     <p>Manage, duplicate, or delete your previously saved configurations.</p>
                 </div>
                 
-                <div style={{ marginBottom: "20px" }}>
-                    <label className="build-action-button" style={{ cursor: 'pointer' }}>
-                        import json
-                        <input 
-                            type="file" 
-                            accept=".json" 
-                            style={{ display: 'none' }} 
-                            onChange={handleImportJson} 
-                        />
-                    </label>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
+                    <div>
+                        <label className="build-action-button" style={{ cursor: 'pointer' }}>
+                            import json
+                            <input 
+                                type="file" 
+                                accept=".json" 
+                                style={{ display: 'none' }} 
+                                onChange={handleImportJson} 
+                            />
+                        </label>
+                    </div>
+
+                    {builds.length > 1 && (
+                        <div className="builds-sort-container" style={{ marginBottom: 0 }}>
+                            <label className="builds-sort-label">
+                                SORT BY
+                                <select 
+                                    className="builds-sort-select"
+                                    value={sortBy} 
+                                    onChange={(e) => setSortBy(e.target.value as SortKey)}
+                                >
+                                    <option value="latest">Latest Edited</option>
+                                    <option value="oldest">Oldest Created</option>
+                                    <option value="name">Name A → Z</option>
+                                    <option value="priceHigh">Price High → Low</option>
+                                    <option value="priceLow">Price Low → High</option>
+                                    <option value="powerHigh">Power High → Low</option>
+                                    <option value="powerLow">Power Low → High</option>
+                                    <option value="complete">Most Complete</option>
+                                </select>
+                            </label>
+                        </div>
+                    )}
                 </div>
 
                 {builds.length === 0 ? (
@@ -154,8 +215,9 @@ export default function Builds() {
                         </TerminalButton>
                     </div>
                 ) : (
-                    <div className="builds-list">
-                        {builds.map((buildSave) => {
+                    <>
+                        <div className="builds-list">
+                            {sortedBuilds.map((buildSave) => {
 
                             const isEditing = editingId === buildSave.id;
 
@@ -274,6 +336,7 @@ export default function Builds() {
                             );
                         })}
                     </div>
+                    </>
                 )}
             </div>
             

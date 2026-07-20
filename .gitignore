@@ -24,6 +24,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.md
 PLANS.txt
 graphify-out
 .claude
