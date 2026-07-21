@@ -1,43 +1,52 @@
-import type { CPU } from "../data/cpu";
-import type { GPU } from "../data/gpu";
-import type { Motherboard } from "../data/motherboards";
-import type { RAM } from "../data/ram";
-import type { PSU } from "../data/psu";
-import type { Storage } from "../data/storage";
-import type { CpuCooler } from "../data/cpuCooler";
-import type { PcCase } from "../data/pcCase";
-import type { CaseFan } from "../data/caseFan";
+import type { CPU } from "../data/cpu"
+import type { GPU } from "../data/gpu"
+import type { Motherboard } from "../data/motherboards"
+import type { RAM } from "../data/ram"
+import type { PSU } from "../data/psu"
+import type { Storage } from "../data/storage"
+import type { CpuCooler } from "../data/cpuCooler"
+import type { PcCase } from "../data/pcCase"
+import type { CaseFan } from "../data/caseFan"
 
 export interface Build {
+  buildName: string
 
-    buildName: string;
+  id?: string
 
-    id?: string;
+  cpu?: CPU
 
-    cpu?: CPU;
+  motherboard?: Motherboard
 
-    motherboard?: Motherboard;
+  cooler?: CpuCooler
 
-    cooler?: CpuCooler;
+  gpu?: GPU
 
-    gpu?: GPU;
+  ram?: RAM
 
-    ram?: RAM;
+  storage?: Storage
 
-    storage?: Storage;
+  storage2?: Storage
 
-    storage2?: Storage;
+  pcCase?: PcCase
 
-    pcCase?: PcCase;
+  caseFan?: CaseFan & { count: number }
 
-    caseFan?: CaseFan & { count: number };
-
-    psu?: PSU;
-
+  psu?: PSU
 }
 
 /** Canonical list of the ten part-slot keys on a Build. */
-export const PART_KEYS = ["cpu", "motherboard", "cooler", "gpu", "ram", "storage", "storage2", "pcCase", "caseFan", "psu"] as const;
+export const PART_KEYS = [
+  "cpu",
+  "motherboard",
+  "cooler",
+  "gpu",
+  "ram",
+  "storage",
+  "storage2",
+  "pcCase",
+  "caseFan",
+  "psu",
+] as const
 
 /** Union type of part-slot key names. */
-export type PartKey = typeof PART_KEYS[number];
+export type PartKey = (typeof PART_KEYS)[number]

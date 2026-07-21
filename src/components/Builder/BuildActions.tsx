@@ -1,279 +1,272 @@
-import { useBuild } from "../../context/BuildContext";
-import { useState } from "react";
-import { saveBuild } from "../../utils/buildStorage";
+import { useBuild } from "../../context/BuildContext"
+import { useState } from "react"
+import { saveBuild } from "../../utils/buildStorage"
 
 export default function BuildActions() {
+  const [status, setStatus] = useState("")
+  const { build, setBuild, setSavedSnapshot, setCurrentBuildId, resetBuild } =
+    useBuild()
+  const [, setActionState] = useState({
+    save: "idle",
 
-    const [status, setStatus] = useState("");
-    const { build, setBuild, setSavedSnapshot, setCurrentBuildId, resetBuild } = useBuild();
-    const [, setActionState] = useState({
+    export: "idle",
 
-        save: "idle",
+    clear: "idle",
+  })
 
-        export: "idle",
+  async function animateAction(
+    action: "save" | "export" | "clear",
 
-        clear: "idle",
+    callback: () => void
+  ) {
+    setActionState((previous) => ({
+      ...previous,
 
-    });
+      [action]: "loading",
+    }))
 
-    async function animateAction(
+    await new Promise((resolve) => setTimeout(resolve, 500))
 
-        action: "save" | "export" | "clear",
+    callback()
 
-        callback: () => void,
+    setActionState((previous) => ({
+      ...previous,
 
+      [action]: "done",
+    }))
+
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    setActionState((previous) => ({
+      ...previous,
+
+      [action]: "idle",
+    }))
+  }
+
+  function handleSave() {
+    if (!build.buildName || build.buildName.trim() === "") {
+      setStatus("Please enter a build name before saving.")
+      setTimeout(() => setStatus(""), 2500)
+      return
+    }
+
+    if (
+      !build.cpu &&
+      !build.gpu &&
+      !build.motherboard &&
+      !build.ram &&
+      !build.storage &&
+      !build.psu &&
+      !build.cooler &&
+      !build.pcCase &&
+      !build.caseFan &&
+      !build.storage2
     ) {
-
-        setActionState(previous => ({
-
-            ...previous,
-
-            [action]: "loading",
-
-        }));
-
-        await new Promise(resolve =>
-
-            setTimeout(resolve, 500)
-
-        );
-
-        callback();
-
-        setActionState(previous => ({
-
-            ...previous,
-
-            [action]: "done",
-
-        }));
-
-        await new Promise(resolve =>
-
-            setTimeout(resolve, 1000)
-
-        );
-
-        setActionState(previous => ({
-
-            ...previous,
-
-            [action]: "idle",
-
-        }));
-
+      setStatus("Please pick a part first.")
+      setTimeout(() => setStatus(""), 2500)
+      return
     }
 
-    function handleSave() {
+    const saved = saveBuild(build)
 
-        if (!build.buildName || build.buildName.trim() === "") {
-            setStatus("Please enter a build name before saving.");
-            setTimeout(() => setStatus(""), 2500);
-            return;
-        }
-
-        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu && !build.cooler && !build.pcCase && !build.caseFan && !build.storage2) {
-            setStatus("Please pick a part first.");
-            setTimeout(() => setStatus(""), 2500);
-            return;
-        }
-
-        const saved = saveBuild(build);
-        
-        if (!saved) {
-            setStatus("Failed to save — storage may be full.");
-            setTimeout(() => setStatus(""), 2500);
-            return;
-        }
-
-        if (!build.id) {
-            setBuild(prev => ({ ...prev, id: saved.id }));
-            setCurrentBuildId(saved.id);
-        }
-        
-        setSavedSnapshot(saved.build);
-
-        setStatus("Build saved successfully.");
-
-        setTimeout(() => {
-            setStatus("");
-        }, 2500);
-
+    if (!saved) {
+      setStatus("Failed to save — storage may be full.")
+      setTimeout(() => setStatus(""), 2500)
+      return
     }
 
-    function handleClear() {
-        resetBuild();
-
-        setStatus("Build cleared.");
-
-        setTimeout(() => {
-
-            setStatus("");
-
-        }, 2500);
-
+    if (!build.id) {
+      setBuild((prev) => ({ ...prev, id: saved.id }))
+      setCurrentBuildId(saved.id)
     }
 
-    function handleExport() {
+    setSavedSnapshot(saved.build)
 
-        if (!build.buildName || build.buildName.trim() === "") {
-            setStatus("Please enter a build name before exporting.");
-            setTimeout(() => setStatus(""), 2500);
-            return;
-        }
+    setStatus("Build saved successfully.")
 
-        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu && !build.cooler && !build.pcCase && !build.caseFan && !build.storage2) {
+    setTimeout(() => {
+      setStatus("")
+    }, 2500)
+  }
 
-            setStatus("Please pick a part first.");
+  function handleClear() {
+    resetBuild()
 
-            setTimeout(() => setStatus(""), 2500);
+    setStatus("Build cleared.")
 
-            return;
+    setTimeout(() => {
+      setStatus("")
+    }, 2500)
+  }
 
-        }
-
-        animateAction("export", () => {
-
-            const json = JSON.stringify(
-
-                build,
-
-                null,
-
-                2
-
-            );
-
-            const blob = new Blob([
-                json
-            ], {
-                type: "application/json",
-            });
-
-            const url = URL.createObjectURL(blob);
-
-            const link = document.createElement("a");
-
-            link.href = url;
-
-            link.download = `${build.buildName}.json`;
-
-            link.click();
-
-            URL.revokeObjectURL(url);
-
-            setStatus("Build exported as JSON.");
-
-            setTimeout(() => {
-
-                setStatus("");
-
-            }, 2500);
-        });
+  function handleExport() {
+    if (!build.buildName || build.buildName.trim() === "") {
+      setStatus("Please enter a build name before exporting.")
+      setTimeout(() => setStatus(""), 2500)
+      return
     }
 
-    function handleSaveToMyBuilds() {
-        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu && !build.cooler && !build.pcCase && !build.caseFan && !build.storage2) {
-            setStatus("Please pick a part first.");
-            setTimeout(() => setStatus(""), 2500);
-            return;
-        }
+    if (
+      !build.cpu &&
+      !build.gpu &&
+      !build.motherboard &&
+      !build.ram &&
+      !build.storage &&
+      !build.psu &&
+      !build.cooler &&
+      !build.pcCase &&
+      !build.caseFan &&
+      !build.storage2
+    ) {
+      setStatus("Please pick a part first.")
 
-        const buildCopy = { ...build, id: undefined, buildName: build.buildName + " (Shared)" };
-        const saved = saveBuild(buildCopy);
-        
-        if (!saved) {
-            setStatus("Failed to save — storage may be full.");
-            setTimeout(() => setStatus(""), 2500);
-            return;
-        }
+      setTimeout(() => setStatus(""), 2500)
 
-        setBuild(prev => ({ ...prev, id: saved.id, buildName: saved.name }));
-        setCurrentBuildId(saved.id);
-        setSavedSnapshot(saved.build);
-        setIsShared(false); // No longer shared, now owned
-
-        setStatus("Saved to my builds.");
-        setTimeout(() => setStatus(""), 2500);
+      return
     }
 
-    function handleShare() {
-        if (!build.cpu && !build.gpu && !build.motherboard && !build.ram && !build.storage && !build.psu && !build.cooler && !build.pcCase && !build.caseFan && !build.storage2) {
-            setStatus("Please pick a part first.");
-            setTimeout(() => setStatus(""), 2500);
-            return;
-        }
+    animateAction("export", () => {
+      const json = JSON.stringify(
+        build,
 
-        import("../../utils/shareUrl").then(({ encodeBuild }) => {
-            const hash = encodeBuild(build);
-            const url = `${window.location.origin}/builder?build=${encodeURIComponent(hash)}`;
-            navigator.clipboard.writeText(url)
-                .then(() => {
-                    setStatus("Share link copied!");
-                    setTimeout(() => setStatus(""), 2500);
-                })
-                .catch(() => {
-                    setStatus("Copy failed — copy the link manually.");
-                    setTimeout(() => setStatus(""), 4000);
-                });
-        }).catch(() => {
-            setStatus("Failed to generate share link.");
-            setTimeout(() => setStatus(""), 2500);
-        });
+        null,
+
+        2
+      )
+
+      const blob = new Blob([json], {
+        type: "application/json",
+      })
+
+      const url = URL.createObjectURL(blob)
+
+      const link = document.createElement("a")
+
+      link.href = url
+
+      link.download = `${build.buildName}.json`
+
+      link.click()
+
+      URL.revokeObjectURL(url)
+
+      setStatus("Build exported as JSON.")
+
+      setTimeout(() => {
+        setStatus("")
+      }, 2500)
+    })
+  }
+
+  function handleSaveToMyBuilds() {
+    if (
+      !build.cpu &&
+      !build.gpu &&
+      !build.motherboard &&
+      !build.ram &&
+      !build.storage &&
+      !build.psu &&
+      !build.cooler &&
+      !build.pcCase &&
+      !build.caseFan &&
+      !build.storage2
+    ) {
+      setStatus("Please pick a part first.")
+      setTimeout(() => setStatus(""), 2500)
+      return
     }
 
-    const { isShared, setIsShared } = useBuild();
+    const buildCopy = {
+      ...build,
+      id: undefined,
+      buildName: build.buildName + " (Shared)",
+    }
+    const saved = saveBuild(buildCopy)
 
-    return (
+    if (!saved) {
+      setStatus("Failed to save — storage may be full.")
+      setTimeout(() => setStatus(""), 2500)
+      return
+    }
 
-        <div className="build-actions">
+    setBuild((prev) => ({ ...prev, id: saved.id, buildName: saved.name }))
+    setCurrentBuildId(saved.id)
+    setSavedSnapshot(saved.build)
+    setIsShared(false) // No longer shared, now owned
 
-            {status && <span className="build-status">{status}</span>}
+    setStatus("Saved to my builds.")
+    setTimeout(() => setStatus(""), 2500)
+  }
 
-            {isShared ? (
-                <button
-                    className="build-action-button"
-                    onClick={handleSaveToMyBuilds}
-                >
-                    save to my builds
-                </button>
-            ) : (
-                <button
-                    className="build-action-button"
-                    onClick={handleSave}
-                >
-                    save build
-                </button>
-            )}
+  function handleShare() {
+    if (
+      !build.cpu &&
+      !build.gpu &&
+      !build.motherboard &&
+      !build.ram &&
+      !build.storage &&
+      !build.psu &&
+      !build.cooler &&
+      !build.pcCase &&
+      !build.caseFan &&
+      !build.storage2
+    ) {
+      setStatus("Please pick a part first.")
+      setTimeout(() => setStatus(""), 2500)
+      return
+    }
 
-            <button
-                className="build-action-button"
-                onClick={handleShare}
-            >
-                copy share link
-            </button>
+    import("../../utils/shareUrl")
+      .then(({ encodeBuild }) => {
+        const hash = encodeBuild(build)
+        const url = `${window.location.origin}/builder?build=${encodeURIComponent(hash)}`
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            setStatus("Share link copied!")
+            setTimeout(() => setStatus(""), 2500)
+          })
+          .catch(() => {
+            setStatus("Copy failed — copy the link manually.")
+            setTimeout(() => setStatus(""), 4000)
+          })
+      })
+      .catch(() => {
+        setStatus("Failed to generate share link.")
+        setTimeout(() => setStatus(""), 2500)
+      })
+  }
 
-            <button
-                className="build-action-button"
-                onClick={handleExport}
-            >
+  const { isShared, setIsShared } = useBuild()
 
-                export json
+  return (
+    <div className="build-actions">
+      {status && <span className="build-status">{status}</span>}
 
-            </button>
+      {isShared ? (
+        <button className="build-action-button" onClick={handleSaveToMyBuilds}>
+          save to my builds
+        </button>
+      ) : (
+        <button className="build-action-button" onClick={handleSave}>
+          save build
+        </button>
+      )}
 
-            {!isShared && (
-                <button
-                    className="build-action-button"
-                    onClick={handleClear}
-                >
+      <button className="build-action-button" onClick={handleShare}>
+        copy share link
+      </button>
 
-                    clear build
+      <button className="build-action-button" onClick={handleExport}>
+        export json
+      </button>
 
-                </button>
-            )}
-
-        </div>
-
-    );
+      {!isShared && (
+        <button className="build-action-button" onClick={handleClear}>
+          clear build
+        </button>
+      )}
+    </div>
+  )
 }

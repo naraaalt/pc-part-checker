@@ -1,13 +1,3 @@
 export default function Cursor() {
-
-    return (
-
-        <span className="cursor">
-
-            █
-
-        </span>
-
-    );
-
+  return <span className="cursor">█</span>
 }

@@ -1,17 +1,13 @@
 export interface Diagnostic {
+  name: string
 
-    name: string;
+  status: "pass" | "warning" | "fail"
 
-    status: "pass" | "warning" | "fail";
-
-    message: string;
-
+  message: string
 }
 
 export interface CompatibilityResult {
+  compatible: boolean
 
-    compatible: boolean;
-
-    diagnostics: Diagnostic[];
-
+  diagnostics: Diagnostic[]
 }

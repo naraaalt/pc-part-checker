@@ -1,95 +1,73 @@
 .terminal-input {
+  display: flex;
 
-    display: flex;
+  align-items: center;
 
-    align-items: center;
+  gap: 10px;
 
-    gap: 10px;
+  position: relative;
 
-    position: relative;
+  cursor: text;
 
-    cursor: text;
-
-    font-family: inherit;
-
+  font-family: inherit;
 }
 
 .terminal-prefix {
+  color: var(--accent);
 
-    color: var(--accent);
-
-    transition: .2s;
-
+  transition: 0.2s;
 }
 
 .terminal-display {
+  display: flex;
 
-    display: flex;
+  align-items: center;
 
-    align-items: center;
-
-    min-height: 24px;
-
+  min-height: 24px;
 }
 
 .terminal-text {
+  color: var(--fg);
 
-    color: var(--fg);
-
-    letter-spacing: 1px;
-
+  letter-spacing: 1px;
 }
 
 .terminal-placeholder {
+  color: var(--fg-muted);
 
-    color: var(--fg-muted);
+  letter-spacing: 1px;
 
-    letter-spacing: 1px;
-
-    font-size: 0.85em;
-
+  font-size: 0.85em;
 }
 
 .terminal-hidden-input {
+  position: absolute;
 
-    position: absolute;
+  inset: 0;
 
-    inset: 0;
+  opacity: 0;
 
-    opacity: 0;
-
-    cursor: text;
-
+  cursor: text;
 }
 
 .terminal-cursor {
+  color: var(--accent);
 
-    color: var(--accent);
+  animation: cursorBlink 0.9s steps(1) infinite;
 
-    animation: cursorBlink .9s steps(1) infinite;
-
-    margin-left: 2px;
-
+  margin-left: 2px;
 }
 
 .focused .terminal-prefix {
-
-    text-shadow: 0 0 8px var(--accent);
-
+  text-shadow: 0 0 8px var(--accent);
 }
 
 .focused .terminal-text {
-
-    color: var(--fg-bright);
-
+  color: var(--fg-bright);
 }
 
 @keyframes cursorBlink {
-
-    50% {
-
-        opacity: 0;
-
-    }
-
+  50% {
+    opacity: 0;
+  }
 }

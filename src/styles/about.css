@@ -1,129 +1,129 @@
 .about-page {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bg);
-    color: var(--fg-secondary);
-    font-family: monospace;
-    overflow: auto;
-    padding: calc(var(--bar-top) + 20px) 20px calc(var(--bar-bottom) + 20px);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg);
+  color: var(--fg-secondary);
+  font-family: monospace;
+  overflow: auto;
+  padding: calc(var(--bar-top) + 20px) 20px calc(var(--bar-bottom) + 20px);
 }
 
 .about-window {
-    width: 90%;
-    max-width: 600px;
-    border: 1px solid var(--border-strong);
-    background-color: var(--bg-recessed);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    display: flex;
-    flex-direction: column;
+  width: 90%;
+  max-width: 600px;
+  border: 1px solid var(--border-strong);
+  background-color: var(--bg-recessed);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
 }
 
 .about-bar {
-    height: 30px;
-    background-color: var(--bg-elevated);
-    border-bottom: 1px solid var(--border-strong);
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    gap: 6px;
+  height: 30px;
+  background-color: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 6px;
 }
 
 .about-bar .dot {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: var(--border-strong);
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--border-strong);
 }
 
 .about-bar .dot:nth-child(1) {
-    background: var(--fail);
+  background: var(--fail);
 }
 
 .about-bar .dot:nth-child(2) {
-    background: var(--warning);
+  background: var(--warning);
 }
 
 .about-bar .dot:nth-child(3) {
-    background: var(--accent);
+  background: var(--accent);
 }
 
 .about-bar-title {
-    margin-left: 10px;
-    color: var(--fg-muted);
-    font-size: 0.8rem;
+  margin-left: 10px;
+  color: var(--fg-muted);
+  font-size: 0.8rem;
 }
 
 .about-body {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .about-title {
-    font-size: 1.5rem;
-    font-weight: normal;
-    color: var(--fg-bright);
-    margin: 0;
-    text-align: center;
-    border-bottom: 1px dashed var(--border-strong);
-    padding-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: var(--fg-bright);
+  margin: 0;
+  text-align: center;
+  border-bottom: 1px dashed var(--border-strong);
+  padding-bottom: 1rem;
 }
 
 .about-section h2 {
-    font-size: 1rem;
-    color: var(--fg-muted);
-    margin: 0 0 1rem 0;
-    font-weight: normal;
+  font-size: 1rem;
+  color: var(--fg-muted);
+  margin: 0 0 1rem 0;
+  font-weight: normal;
 }
 
 .about-section p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--fg-secondary);
-    margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--fg-secondary);
+  margin: 0;
 }
 
 .about-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .about-list li {
-    font-size: 0.9rem;
-    color: var(--fg-secondary);
-    display: flex;
-    gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--fg-secondary);
+  display: flex;
+  gap: 1rem;
 }
 
 .about-list span {
-    color: var(--fg-muted);
-    min-width: 100px;
+  color: var(--fg-muted);
+  min-width: 100px;
 }
 
 .tech-grid {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .tech-grid span {
-    background-color: var(--bg-elevated);
-    border: 1px solid var(--border-strong);
-    padding: 0.3rem 0.8rem;
-    font-size: 0.85rem;
-    color: var(--fg-secondary);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  color: var(--fg-secondary);
 }
 
 .about-actions {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
 }

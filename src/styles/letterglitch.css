@@ -1,55 +1,45 @@
-.letter-glitch{
+.letter-glitch {
+  position: fixed;
 
-    position:fixed;
+  inset: 0;
 
-    inset:0;
+  overflow: hidden;
 
-    overflow:hidden;
+  z-index: 0;
 
-    z-index:0;
-
-    pointer-events:none;
-
+  pointer-events: none;
 }
 
-.letter-glitch canvas{
+.letter-glitch canvas {
+  width: 100%;
 
-    width:100%;
+  height: 100%;
 
-    height:100%;
+  display: block;
 
-    display:block;
-
-    opacity:.15;
-
+  opacity: 0.15;
 }
 
-.letter-glitch-outer{
+.letter-glitch-outer {
+  position: absolute;
 
-    position:absolute;
+  inset: 0;
 
-    inset:0;
-
-    background:
-    radial-gradient(
-        circle,
-        rgba(0,0,0,0) 60%,
-        rgba(0,0,0,.96) 100%
-    );
-
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.96) 100%
+  );
 }
 
-.letter-glitch-center{
+.letter-glitch-center {
+  position: absolute;
 
-    position:absolute;
+  inset: 0;
 
-    inset:0;
-
-    background:
-    radial-gradient(
-        circle,
-        rgba(0,0,0,.70) 0%,
-        rgba(0,0,0,0) 55%
-    );
-
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0) 55%
+  );
 }

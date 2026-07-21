@@ -1,133 +1,133 @@
 export interface CaseFan {
-    id: number;
-    brand: "Noctua" | "Corsair" | "Arctic" | "be quiet!" | "Cooler Master";
-    name: string;
-    size: 120 | 140;
-    rpm: number;
-    airflow: number;  // CFM
-    noise: number;    // dBA
-    price: number;    // per single fan
+  id: number
+  brand: "Noctua" | "Corsair" | "Arctic" | "be quiet!" | "Cooler Master"
+  name: string
+  size: 120 | 140
+  rpm: number
+  airflow: number // CFM
+  noise: number // dBA
+  price: number // per single fan
 }
 
 export const caseFans: CaseFan[] = [
-    {
-        id: 1,
-        brand: "Noctua",
-        name: "Noctua NF-A12x25 PWM",
-        size: 120,
-        rpm: 2000,
-        airflow: 60.0,
-        noise: 22.6,
-        price: 33
-    },
-    {
-        id: 2,
-        brand: "Corsair",
-        name: "Corsair LL120 RGB Single Pack",
-        size: 120,
-        rpm: 1500,
-        airflow: 43.2,
-        noise: 24.8,
-        price: 40
-    },
-    {
-        id: 3,
-        brand: "Arctic",
-        name: "Arctic P12 PWM PST",
-        size: 120,
-        rpm: 1800,
-        airflow: 56.3,
-        noise: 22.5,
-        price: 10
-    },
-    {
-        id: 4,
-        brand: "be quiet!",
-        name: "be quiet! Silent Wings 4 PWM",
-        size: 120,
-        rpm: 1600,
-        airflow: 48.7,
-        noise: 18.9,
-        price: 24
-    },
-    {
-        id: 5,
-        brand: "Cooler Master",
-        name: "Cooler Master SickleFlow 120",
-        size: 120,
-        rpm: 1800,
-        airflow: 62.0,
-        noise: 27.0,
-        price: 15
-    },
-    {
-        id: 6,
-        brand: "Noctua",
-        name: "Noctua NF-A14 PWM",
-        size: 140,
-        rpm: 1500,
-        airflow: 82.5,
-        noise: 24.6,
-        price: 27
-    },
-    {
-        id: 7,
-        brand: "be quiet!",
-        name: "be quiet! Silent Wings 4 Pro PWM",
-        size: 140,
-        rpm: 2400,
-        airflow: 97.4,
-        noise: 36.8,
-        price: 30
-    },
-    {
-        id: 8,
-        brand: "Arctic",
-        name: "Arctic P14 PWM PST",
-        size: 140,
-        rpm: 1700,
-        airflow: 72.8,
-        noise: 22.5,
-        price: 12
-    },
-    {
-        id: 9,
-        brand: "Corsair",
-        name: "Corsair iCUE LINK QX120 RGB",
-        size: 120,
-        rpm: 2400,
-        airflow: 63.1,
-        noise: 37.0,
-        price: 50
-    },
-    {
-        id: 10,
-        brand: "Corsair",
-        name: "Corsair iCUE LINK QX140 RGB",
-        size: 140,
-        rpm: 2000,
-        airflow: 82.5,
-        noise: 37.0,
-        price: 55
-    },
-    {
-        id: 11,
-        brand: "be quiet!",
-        name: "be quiet! Light Wings PWM",
-        size: 140,
-        rpm: 1500,
-        airflow: 56.0,
-        noise: 23.3,
-        price: 25
-    },
-    {
-        id: 12,
-        brand: "Noctua",
-        name: "Noctua NF-P12 redux-1700 PWM",
-        size: 120,
-        rpm: 1700,
-        airflow: 70.8,
-        noise: 25.1,
-        price: 15
-    }
-];
+  {
+    id: 1,
+    brand: "Noctua",
+    name: "Noctua NF-A12x25 PWM",
+    size: 120,
+    rpm: 2000,
+    airflow: 60.0,
+    noise: 22.6,
+    price: 33,
+  },
+  {
+    id: 2,
+    brand: "Corsair",
+    name: "Corsair LL120 RGB Single Pack",
+    size: 120,
+    rpm: 1500,
+    airflow: 43.2,
+    noise: 24.8,
+    price: 40,
+  },
+  {
+    id: 3,
+    brand: "Arctic",
+    name: "Arctic P12 PWM PST",
+    size: 120,
+    rpm: 1800,
+    airflow: 56.3,
+    noise: 22.5,
+    price: 10,
+  },
+  {
+    id: 4,
+    brand: "be quiet!",
+    name: "be quiet! Silent Wings 4 PWM",
+    size: 120,
+    rpm: 1600,
+    airflow: 48.7,
+    noise: 18.9,
+    price: 24,
+  },
+  {
+    id: 5,
+    brand: "Cooler Master",
+    name: "Cooler Master SickleFlow 120",
+    size: 120,
+    rpm: 1800,
+    airflow: 62.0,
+    noise: 27.0,
+    price: 15,
+  },
+  {
+    id: 6,
+    brand: "Noctua",
+    name: "Noctua NF-A14 PWM",
+    size: 140,
+    rpm: 1500,
+    airflow: 82.5,
+    noise: 24.6,
+    price: 27,
+  },
+  {
+    id: 7,
+    brand: "be quiet!",
+    name: "be quiet! Silent Wings 4 Pro PWM",
+    size: 140,
+    rpm: 2400,
+    airflow: 97.4,
+    noise: 36.8,
+    price: 30,
+  },
+  {
+    id: 8,
+    brand: "Arctic",
+    name: "Arctic P14 PWM PST",
+    size: 140,
+    rpm: 1700,
+    airflow: 72.8,
+    noise: 22.5,
+    price: 12,
+  },
+  {
+    id: 9,
+    brand: "Corsair",
+    name: "Corsair iCUE LINK QX120 RGB",
+    size: 120,
+    rpm: 2400,
+    airflow: 63.1,
+    noise: 37.0,
+    price: 50,
+  },
+  {
+    id: 10,
+    brand: "Corsair",
+    name: "Corsair iCUE LINK QX140 RGB",
+    size: 140,
+    rpm: 2000,
+    airflow: 82.5,
+    noise: 37.0,
+    price: 55,
+  },
+  {
+    id: 11,
+    brand: "be quiet!",
+    name: "be quiet! Light Wings PWM",
+    size: 140,
+    rpm: 1500,
+    airflow: 56.0,
+    noise: 23.3,
+    price: 25,
+  },
+  {
+    id: 12,
+    brand: "Noctua",
+    name: "Noctua NF-P12 redux-1700 PWM",
+    size: 120,
+    rpm: 1700,
+    airflow: 70.8,
+    noise: 25.1,
+    price: 15,
+  },
+]

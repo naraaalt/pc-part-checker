@@ -1,29 +1,25 @@
+import { VERSION } from "../constants"
+
 export default function Hero() {
-    return (
-        <section className="hero">
+  return (
+    <section className="hero">
+      <p className="version">VERSION {VERSION}</p>
 
-            <p className="version">
-                VERSION 1.0
-            </p>
+      <h1>
+        PC PART
+        <br />
+        COMPATIBILITY
+        <br />
+        CHECKER
+      </h1>
 
-            <h1>
-                PC PART
-                <br />
-                COMPATIBILITY
-                <br />
-                CHECKER
-            </h1>
+      <div className="boot-message">
+        <p>Initializing Compatibility Engine...</p>
 
-            <div className="boot-message">
+        <p>Loading Component Database...</p>
 
-                <p>Initializing Compatibility Engine...</p>
-
-                <p>Loading Component Database...</p>
-
-                <p className="ready">Ready.</p>
-
-            </div>
-
-        </section>
-    );
+        <p className="ready">Ready.</p>
+      </div>
+    </section>
+  )
 }

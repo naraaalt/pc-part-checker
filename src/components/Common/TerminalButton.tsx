@@ -1,103 +1,75 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
-import "./terminalButton.css";
+import "./terminalButton.css"
 
 type Props = {
+  children: React.ReactNode
 
-    children: React.ReactNode;
+  onClick?: () => void
 
-    onClick?: () => void;
+  className?: string
 
-    className?: string;
-
-    loadingText?: string;
-
-};
+  loadingText?: string
+}
 
 export default function TerminalButton({
+  children,
 
-    children,
+  onClick,
 
-    onClick,
+  className = "",
 
-    className = "",
-
-    loadingText = "exiting builder...",
-
+  loadingText = "exiting builder...",
 }: Props) {
+  const [typing, setTyping] = useState(false)
 
-    const [typing, setTyping] = useState(false);
+  const [displayText, setDisplayText] = useState("")
 
-    const [displayText, setDisplayText] = useState("");
+  useEffect(() => {
+    if (!typing) return
 
-    useEffect(() => {
+    let index = 0
 
-        if (!typing) return;
+    setDisplayText("")
 
-        let index = 0;
+    const interval = setInterval(() => {
+      index++
 
-        setDisplayText("");
+      setDisplayText(loadingText.slice(0, index))
 
-        const interval = setInterval(() => {
+      if (index >= loadingText.length) {
+        clearInterval(interval)
 
-            index++;
+        setTimeout(() => {
+          onClick?.()
 
-            setDisplayText(loadingText.slice(0, index));
+          setTyping(false)
+        }, 500)
+      }
+    }, 45)
 
-            if (index >= loadingText.length) {
+    return () => clearInterval(interval)
+  }, [typing])
 
-                clearInterval(interval);
+  const handleClick = async () => {
+    if (typing) return
 
-                setTimeout(() => {
+    if (loadingText) {
+      setTyping(true)
+    } else {
+      await onClick?.()
+    }
+  }
 
-                    onClick?.();
-                    
-                    setTyping(false);
-
-                }, 500);
-
-            }
-
-        }, 45);
-
-        return () => clearInterval(interval);
-
-    }, [typing]);
-
-    const handleClick = async () => {
-
-        if (typing) return;
-
-        if (loadingText) {
-
-            setTyping(true);
-
-        } else {
-
-            await onClick?.();
-
-        }
-
-    };
-
-    return (
-
-        <button
-            className={`terminal-button ${className} ${typing ? "typing" : ""}`}
-            onClick={handleClick}
-            disabled={typing}
-        >
-
-            <span className="terminal-button-text">
-
-                {typing
-                    ? displayText
-                    : children}
-
-            </span>
-
-        </button>
-
-    );
-
+  return (
+    <button
+      className={`terminal-button ${className} ${typing ? "typing" : ""}`}
+      onClick={handleClick}
+      disabled={typing}
+    >
+      <span className="terminal-button-text">
+        {typing ? displayText : children}
+      </span>
+    </button>
+  )
 }

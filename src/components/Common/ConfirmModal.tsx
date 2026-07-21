@@ -1,19 +1,18 @@
-
-import ReactDOM from "react-dom";
-import "./confirmModal.css";
+import ReactDOM from "react-dom"
+import "./confirmModal.css"
 
 type Props = {
-  open: boolean;
-  title: string;
-  message: string;
-  warning?: string;
-  btnSaveLabel: string;
-  btnDiscardLabel: string;
-  btnCancelLabel: string;
-  onSave: () => void;
-  onDiscard: () => void;
-  onCancel: () => void;
-};
+  open: boolean
+  title: string
+  message: string
+  warning?: string
+  btnSaveLabel: string
+  btnDiscardLabel: string
+  btnCancelLabel: string
+  onSave: () => void
+  onDiscard: () => void
+  onCancel: () => void
+}
 
 export default function ConfirmModal({
   open,
@@ -27,12 +26,11 @@ export default function ConfirmModal({
   onDiscard,
   onCancel,
 }: Props) {
-  if (!open) return null;
+  if (!open) return null
 
   return ReactDOM.createPortal(
     <div className="confirm-overlay" onClick={onCancel}>
       <div className="confirm-modal" onClick={(e) => e.stopPropagation()}>
-
         <div className="confirm-header">
           <span className="confirm-header-text">{title}</span>
         </div>
@@ -53,9 +51,8 @@ export default function ConfirmModal({
             {btnCancelLabel}
           </button>
         </div>
-
       </div>
     </div>,
     document.body
-  );
+  )
 }

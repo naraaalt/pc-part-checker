@@ -1,23 +1,19 @@
-.builder-header{
+.builder-header {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: center;
 
-    align-items:center;
-
-    margin-bottom:20px;
-
+  margin-bottom: 20px;
 }
 
-.builder-header h1{
+.builder-header h1 {
+  color: var(--accent);
 
-    color: var(--accent);
+  font-size: 34px;
 
-    font-size:34px;
+  letter-spacing: 6px;
 
-    letter-spacing:6px;
-
-    font-weight:400;
-
+  font-weight: 400;
 }

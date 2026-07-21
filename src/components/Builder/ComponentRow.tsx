@@ -1,68 +1,52 @@
-import SearchableSelect from "./SearchableSelect";
+import SearchableSelect from "./SearchableSelect"
 
-type Props<T extends { id:number; name:string }> = {
+type Props<T extends { id: number; name: string }> = {
+  label: string
 
-    label:string;
+  placeholder: string
 
-    placeholder:string;
+  options: T[]
 
-    options:T[];
+  value?: T
 
-    value?:T;
+  onChange: (value: T) => void
 
-    onChange:(value:T)=>void;
+  helperText?: string
 
-    helperText?:string;
+  disabled?: boolean
 
-    disabled?:boolean;
+  disabledPlaceholder?: string
+}
 
-    disabledPlaceholder?:string;
-
-};
-
-export default function ComponentRow<
-    T extends { id: number; name: string }
->({
-    label,
-    placeholder,
-    options,
-    value,
-    onChange,
-    helperText,
-    disabled = false,
-    disabledPlaceholder,
+export default function ComponentRow<T extends { id: number; name: string }>({
+  label,
+  placeholder,
+  options,
+  value,
+  onChange,
+  helperText,
+  disabled = false,
+  disabledPlaceholder,
 }: Props<T>) {
+  return (
+    <div className="component-row">
+      <label>{label}</label>
 
-    return(
+      {helperText && <small className="component-text">{helperText}</small>}
 
-        <div className="component-row">
+      <SearchableSelect
+        placeholder={placeholder}
 
-            <label>{label}</label>
+        disabledPlaceholder={disabledPlaceholder}
 
-            {helperText && (
-                <small className="component-text">
-                    {helperText}
-                </small>
-            )}
+        options={options}
 
-            <SearchableSelect
+        value={value}
 
-                placeholder={placeholder}
+        onChange={onChange}
 
-                disabledPlaceholder={disabledPlaceholder}
-
-                options={options}
-
-                value={value}
-
-                onChange={onChange}
-
-                disabled={disabled}
-
-            />
-
-        </div>
-
-    );
-
+        disabled={disabled}
+      />
+    </div>
+  )
 }

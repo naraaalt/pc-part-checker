@@ -1,4 +1,4 @@
-import type { Build } from "../types/Build";
+import type { Build } from "../types/Build"
 
 /**
  * Estimate total system power draw in watts.
@@ -6,44 +6,34 @@ import type { Build } from "../types/Build";
  * for fans / peripherals / VRMs.
  */
 export function calculatePower(build: Build): number {
+  let total = 0
 
-    let total = 0;
+  if (build.cpu) total += build.cpu.tdp
 
-    if (build.cpu)
-        total += build.cpu.tdp;
+  if (build.gpu) total += build.gpu.power
 
-    if (build.gpu)
-        total += build.gpu.power;
+  // Motherboard: ~50 W typical draw
+  if (build.motherboard) total += 50
 
-    // Motherboard: ~50 W typical draw
-    if (build.motherboard)
-        total += 50;
+  // RAM: ~4 W for ≤16 GB, ~8 W for larger kits
+  if (build.ram) total += build.ram.capacity > 16 ? 8 : 4
 
-    // RAM: ~4 W for ≤16 GB, ~8 W for larger kits
-    if (build.ram)
-        total += build.ram.capacity > 16 ? 8 : 4;
+  // Storage: ~6 W per drive (NVMe or SATA SSD)
+  if (build.storage) total += 6
 
-    // Storage: ~6 W per drive (NVMe or SATA SSD)
-    if (build.storage)
-        total += 6;
+  // Secondary Storage: ~6 W per drive
+  if (build.storage2) total += 6
 
-    // Secondary Storage: ~6 W per drive
-    if (build.storage2)
-        total += 6;
+  // CPU Cooler: ~5 W for pump/fans
+  if (build.cooler) total += 5
 
-    // CPU Cooler: ~5 W for pump/fans
-    if (build.cooler)
-        total += 5;
+  // Case Fans: ~2 W per fan
+  if (build.caseFan) total += build.caseFan.count * 2
 
-    // Case Fans: ~2 W per fan
-    if (build.caseFan)
-        total += build.caseFan.count * 2;
+  // USB, VRM and general motherboard overhead (lowered from 50W to 30W now that cooler and fans are explicit)
+  if (total > 0) {
+    total += 30
+  }
 
-    // USB, VRM and general motherboard overhead (lowered from 50W to 30W now that cooler and fans are explicit)
-    if (total > 0) {
-        total += 30;
-    }
-
-    return total;
-
+  return total
 }
